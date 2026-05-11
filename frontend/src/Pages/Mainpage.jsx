@@ -420,9 +420,9 @@ const Mainpage = () => {
   ];
 
   const LOCAL_BOTTOM_BANNERS = [
-    { bannerImage: '/assets/img/grid_left_1.png' },  // 0 — Top grid left
-    { bannerImage: '/assets/img/grid_right_1.png' },  // 1 — Top grid right-top
-    { bannerImage: '/assets/img/grid_right_2.png' },  // 2 — Top grid right-bottom
+    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/Shaya/05-May/Responsive/08/Responsive_01.jpg' },  // 0 — Top grid left
+    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/05_MAY/Banner/11-11/01/UB_Desktop.jpg' },  // 1 — Top grid right-top
+    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/Summer/01/UB_Desktop.jpg' },  // 2 — Top grid right-bottom
     { bannerImage: '/assets/img/grid_left_2.png' },   // 3 — Bottom grid left
     { bannerImage: '/assets/img/grid_right_3.png' },  // 4 — Bottom grid right-top
     { bannerImage: '/assets/img/grid_right_4.png' },  // 5 — Bottom grid right-bottom

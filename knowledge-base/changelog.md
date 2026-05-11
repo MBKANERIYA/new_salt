@@ -8,6 +8,7 @@
 - **Banner grid sections**: Added `banner-grid-left` (max 400px) / `banner-grid-right` (max 195px) CSS classes. Generated 2 grid-left images + 4 grid-right images
 - **Category grid images** (`shop_category`): Fixed 220px height. Generated 6 new category images on teal backgrounds (`cat_necklaces`, `cat_earrings`, `cat_bracelets`, `cat_rings`, `cat_engagement`, `cat_home`)
 - **Filter categories** ("Wrapped with love"): Generated 6 themed images (`filter_gifts_her`, `filter_gifts_him`, `filter_anniversary`, `filter_wedding`, `filter_birthday`, `filter_under500`). Added click functionality with dynamic query parameters (`typeBy=female`, `occasionBy=ENGAGEMENT`, etc.). Changed the last option from "Under $500" to "Under ₹50,000" and added `below50k` price logic to backend.
+- **Top banner grid**: Replaced the first 3 generated images with custom Caratlane promotional images per user request.
 - **Gift section**: Fixed 320px height. Generated 3 gift wrap images (`gift_wrap_1–3.png`)
 - **Full-width promo banners**: New `promo-banner` class with 340px max-height. Generated 2 panoramic promo banners
 - **Salt Promise icons**: Constrained to 36×36px
