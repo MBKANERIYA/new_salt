@@ -1127,6 +1127,140 @@ const Mainpage = () => {
           </div>
         </section>
 
+        {/* New Arrivals */}
+        {/* <section className="container">
+          <div>
+            <h3 className="font_main text-center pb-4">New Arrivals</h3>
+            <div className="row position-relative">
+              <div className="d-lg-none d-block">
+                <button onClick={() => arrvial?.current?.slickPrev()} className="pre-btn-set">
+                  <i className="ri-arrow-left-wide-line"></i>
+                </button>
+              </div>
+              <div>
+                {newArrivals.length > 0 ? (
+                  <Slider ref={arrvial} {...newarrivals}>
+                    {newArrivals.slice(0, 4).map((item) => (
+                      <div className="card border-0 px-1" key={item.product_id}>
+                        <Link to={`/Productdetails/${item.product_id}`} className="text-decoration-none">
+                          <img
+                            alt={item.title}
+                            src={item.image01}
+                            className="w-100 height_Set"
+                            onError={(e) => {
+                              e.target.onerror = null; // Prevent infinite loop
+                              e.target.style.display = "none";
+                              e.target.parentElement.innerHTML = `
+                              <div class='no-image-placeholder-home d-flex justify-content-center align-items-center border border-1 rounded-3'>
+                                  <span class='exlimation_mark'>!</span>
+                              </div>`;
+                            }}
+                          />
+                        </Link>
+                        <div className="card-body px-1">
+                          <h6>{item.title}</h6>
+                          <p>{formatCurrency(item.total14KT)}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </Slider>
+                ) : (
+                  <div className="no-image-placeholder-home d-flex justify-content-center align-items-center border border-1 rounded-3">
+                    <span className="exlimation_mark">!</span>
+                  </div>
+                )}
+                <Link to="/arrival" className="text-decoration-none">
+                  <button className="btn mx-auto d-block viewall_btn">
+                    <span>View All</span>
+                  </button>
+                </Link>
+              </div>
+              <div className="d-lg-none d-block">
+                <button onClick={() => arrvial?.current?.slickNext()} className="next-btn-set">
+                  <i className="ri-arrow-right-wide-line"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section> */}
+
+        {/* Gift (Second Instance) */}
+        <section className="container-fluid px-1 gift_sec_main">
+          {/* Grid layout for large devices */}
+          <div className="d-none d-lg-block d-md-block">
+            <div className="row m-0">
+              {gifts.map((gift) => (
+                <div key={gift.gift_id} className="col-lg-4 col-md-4 col-sm-12 col-12 p-0">
+                  <div className="card border-0 p-2">
+                    {
+                      gift.giftImage && gift.giftImage.endsWith(".mp4") ||
+                        gift.giftImage && gift.giftImage.endsWith(".mkv") ||
+                        gift.giftImage && gift.giftImage.endsWith(".avi") ? (
+                        <video
+                          src={gift.giftImage}
+                          className="img-fluid"
+                          style={{ borderRadius: "10px", objectFit: "cover" }}
+                          autoPlay
+                          playsInline
+                          muted
+                          loop
+                        />
+                      ) : (
+                        <img
+                          alt={gift.giftName}
+                          src={gift.giftImage}
+                          className="img-fluid"
+                          style={{ borderRadius: "10px", objectFit: "cover" }}
+                        />
+                      )}
+                    <div className="card-body text-center">
+                      <h5>{gift.giftName}</h5>
+                      <p className="line_hover">Shop Now &nbsp; &gt;</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Carousel for mobile devices */}
+          <div className="d-lg-none d-md-none d-block">
+            <Slider {...graduate}>
+              {gifts.map((gift) => (
+                <div key={gift.gift_id} className="p-2">
+                  <div className="card border-0">
+                    {
+                      gift.giftImage && gift.giftImage.endsWith(".mp4") ||
+                        gift.giftImage && gift.giftImage.endsWith(".mkv") ||
+                        gift.giftImage && gift.giftImage.endsWith(".avi") ? (
+                        <video
+                          src={gift.giftImage}
+                          className="img-fluid"
+                          style={{ borderRadius: "10px", objectFit: "cover" }}
+                          autoPlay
+                          playsInline
+                          muted
+                          loop
+                        />
+                      ) : (
+                        <img
+                          alt={gift.giftName}
+                          src={gift.giftImage}
+                          className="img-fluid"
+                          style={{ borderRadius: "10px", objectFit: "cover" }}
+                        />
+                      )}
+                    <div className="card-body text-center">
+                      <h5>{gift.giftName}</h5>
+                      <p className="line_hover">Shop Now &nbsp; &gt;</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </section>
+
         {/* Wrapped with love! */}
         <section className="container-fluid pb-4 shop_category">
           <div>
