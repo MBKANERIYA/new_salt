@@ -230,14 +230,15 @@ video {
 .banner-grid-left img,
 .banner-grid-left video {
   width: 100%;
-  max-height: 400px;
+  height: 520px;
   object-fit: cover;
   border-radius: 10px;
 }
 
 .banner-grid-right img {
   width: 100%;
-  max-height: 195px;
+  height: 100%;
+  max-height: none;
   object-fit: cover;
   border-radius: 10px;
 }
@@ -266,10 +267,10 @@ img.promo-banner {
   }
   .banner-grid-left img,
   .banner-grid-left video {
-    max-height: 320px;
+    height: 400px;
   }
   .banner-grid-right img {
-    max-height: 155px;
+    height: 100%;
   }
   img.promo-banner {
     max-height: 260px;
@@ -285,10 +286,10 @@ img.promo-banner {
   }
   .banner-grid-left img,
   .banner-grid-left video {
-    max-height: 220px;
+    height: 320px;
   }
   .banner-grid-right img {
-    max-height: 105px;
+    height: 100%;
   }
   img.promo-banner {
     max-height: 180px;
