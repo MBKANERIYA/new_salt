@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent Bootstrap modals from permanently locking scroll during SPA navigation */
+html, body {
+  overflow: auto !important;
+  overflow-y: auto !important;
+  height: auto !important;
+}

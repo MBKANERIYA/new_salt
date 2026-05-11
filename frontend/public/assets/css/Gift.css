@@ -1,0 +1,239 @@
+.gift_card_body {
+    margin: 0 !important;
+    height: 80px;
+    padding: 16px 22px 14px 15px;
+    /* display: flex; */
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    background: var(--background);
+    /* background: linear-gradient(90deg, rgba(255, 224, 0, 0.3) 0%, rgba(255, 207, 178, 0.3) 51.04%, rgba(222, 214, 251, 0.3) 100%); */
+    box-shadow: var(--shadow-color);
+}
+
+.gift_card_body p {
+    color: var(--color) !important;
+    font-size: 12px;
+}
+
+.gift_card_body p span {
+    font-size: 15px;
+    font-weight: bold !important;
+    color: var(--color)!important;
+    font-family: "Akaya Telivigala", system-ui;
+}
+
+.gift_mess {
+    /* line-height: 0% !important; */
+    padding-top: 0px !important;
+}
+
+.android_box_shadow {
+    box-shadow:var(--shadow-color);
+    padding: 10px 10px 10px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    background-color: #fff;
+}
+
+.absoulate_image {
+    display: block;
+    position: absolute;
+    bottom: -17px;
+    z-index: 1;
+    font-size: 13px;
+    background: var(--color);
+    color: #fff !important;
+    height: 36px;
+    border-radius: 0 0 10px 10px;
+    text-align: center;
+    width: 95%;
+    line-height: 36px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 15px;
+    font-weight: 400;
+}
+
+.relative_image {
+    display: block;
+    border: 1px solid #f6f3f9;
+    border-radius: 12px;
+    background-size: 100% auto;
+    width: 100%;
+    height: 244px;
+    position: relative;
+    left: 0;
+    bottom: 0;
+}
+
+.bg_gift {
+    background-color: #f3f5f9;
+}
+
+.bg_gift h6 {
+    color: var(--color);
+}
+
+.bg_gift h6 span {
+    color: #05283c;
+    font-weight: 500;
+}
+
+.textarea_wrapper {
+    position: relative;
+    max-width: 468px;
+    max-height: 100px;
+}
+
+.textarea_wrapper textarea {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 12px;
+    min-height: 100px;
+    border: 1px solid #e2e2fd;
+    width: 100%;
+    resize: none;
+    font-size: 11px;
+    overflow: hidden;
+    padding-right: 32px;
+    letter-spacing: 0.8px;
+}
+
+.max_char {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    color: #eb4f5c;
+    font-size: 13px;
+}
+
+.gift_btn {
+    font-size: 13px !important;
+    line-height: 22px;
+    height: 42px;
+    font-weight: bold !important;
+    color: var(--color) !important;
+    margin-right: 8px !important;
+    margin-bottom: 1px !important;
+    border: 1px solid var(--color) !important;
+    border-radius: 12px !important;
+    cursor: pointer;
+    text-align: center;
+}
+
+.gift_coupon_container {
+    display: flex;
+    align-items: center;
+}
+
+.gift_coupon {
+    display: flex;
+    overflow: hidden;
+    scroll-snap-type: x mandatory;
+    padding: 10px;
+    gap: 15px;
+    scroll-padding: 10px;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.gift_coupon .item1 {
+    /* flex: 0 0 100px; */
+    scroll-snap-align: start;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.gift_btn {
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.gift_btn.selected {
+    background: var(--background) !important;
+    color: #fff !important;
+}
+
+.gift_coupon::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll_btn {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.number_gift {
+    border-radius: 10px !important;
+    padding: 10px 15px !important;
+}
+
+.payment_btn {
+    background: var(--background) !important;
+    border-radius: 12px !important;
+    /* color: #fff !important; */
+    font-size: 13px !important;
+    padding: 10px 15px !important;
+}
+
+.gif_video_sec {
+    width: 75% !important;
+}
+
+/* Default style for the gift wrap name */
+.absoulate_image {
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Highlighted style for selected gift wrap name */
+.absoulate_image.highlighted {
+    font-weight: bold;
+    background: #6a9ebb;
+    /* Example highlight color */
+}
+
+@media (max-width: 768px) {
+    .mb_medium {
+        /* margin-bottom: 100px; */
+    }
+}
+
+@media (min-width: 769px) {
+    .mb_medium {
+        /* margin-bottom: 60px; */
+        /* Large devices mein margin remove */
+    }
+}
+
+@media(max-width:1025px) {
+    .gif_video_sec {
+        width: 100% !important;
+    }
+}
+
+@media(max-width:769px) {
+    .gif_video_sec {
+        width: 95% !important;
+    }
+}
+
+@media(max-width:425px) {
+    .absoulate_image {
+        width: 93.5% !important;
+    }
+}
+
+@media(max-width:321px) {
+    .absoulate_image {
+        width: 91.5% !important;
+    }
+}

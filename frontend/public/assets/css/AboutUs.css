@@ -1,0 +1,378 @@
+/* who are we */
+.aboutus_who_are_we p {
+    font-size: 14px;
+    letter-spacing: 0.8px;
+}
+
+/* Featured In */
+.aboutus_featured {
+    background-color: rgb(246, 246, 246);
+}
+
+.featured-img {
+    margin: 0 85px;
+}
+
+/* Mission & Promise */
+.aboutus_mission p {
+    font-size: 14px;
+    padding-left: 25px;
+    width: 45vw;
+    text-align: justify;
+    letter-spacing: 0.8px;
+}
+
+.aboutus_mission h5 {
+    padding-top: 20px;
+}
+
+.promise-text {
+    position: relative;
+    padding-left: 25px;
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+.promise-text i {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* advantages */
+.advantages_bg {
+    width: 100%;
+    background-color: rgb(35, 21, 53);
+}
+
+.aboutus_advantages h3 {
+    font-size: 15px;
+}
+
+.aboutus_advantages p {
+    font-size: 13px;
+    color: #c4ade1;
+    max-width: 239px;
+    letter-spacing: 0.8px;
+}
+
+.aboutus_advantages img {
+    width: 110px;
+    height: 90px;
+}
+
+.aboutus_advantages {
+    padding: 60px 50px;
+}
+
+.advantages_div {
+    padding: 50px;
+}
+
+.padding_left {
+    padding-left: 120px !important;
+}
+
+/* Beginning */
+.border_bottom_beginning {
+    border-bottom: 1px solid #eceaea;
+    font-weight: bolder;
+}
+
+.aboutus_beginning h3 {
+    font-size: 20px;
+    letter-spacing: 0.5px;
+}
+
+.aboutus_beginning p {
+    font-size: 13px;
+    width: 42vw;
+    font-weight: normal;
+    letter-spacing: 0.8px;
+}
+
+.aboutus_beginning p:first-of-type {
+    font-size: 16px;
+}
+
+/* Team */
+.aboutus_team div {
+    margin: 0 !important;
+    padding: 8px;
+}
+
+.team_p {
+    font-size: 13px;
+    letter-spacing: 0.8px;
+}
+
+.aboutus_team h4 {
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    padding-top: 10px;
+}
+
+.aboutus_team p {
+    letter-spacing: 0.8px;
+    font-size: 12px;
+}
+
+.aboutus_team {
+    padding: 0px 60px;
+}
+
+.custom-img-size {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Advantage-Two */
+.advantage_two_bg {
+    background-color: #f6f6f6;
+    padding: 57px 0;
+    text-align: center;
+}
+
+.advantage_two_bg p {
+    font-size: 14px;
+    width: 73vw;
+    letter-spacing: 0.8px;
+    margin: 0 auto;
+}
+
+/* Testimonial */
+.aboutus_testimonial_bg {
+    background-color: #f9f9fa;
+    padding: 100px 0;
+}
+
+.aboutus_testimonial_bg h2 {
+    color: #9d9fa4;
+    font-weight: 400;
+    font-size: 28px;
+    width: 75vw;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+.aboutus_testimonial_bg p {
+    letter-spacing: 0.8px;
+    font-size: 13px;
+    padding-top: 30px;
+}
+
+.aboutus_testimonial_bg_button {
+    padding: 10px 16px;
+    font-size: 14px;
+    text-align: center;
+    color: var(--color);
+    border: 1px solid var(--color);
+    border-radius: 3px;
+}
+
+.aboutus_testimonial_bg img {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+/* Process */
+.aboutus_process_bg {
+    background-color: #f9f9fa;
+}
+
+.process_bg {
+    background-color: #f5f5f5;
+    padding-left: 25px !important;
+    padding: 50px 0;
+}
+
+.process_bg h4 {
+    letter-spacing: 0.5px;
+    font-size: 20px;
+}
+
+.process_bg p {
+    letter-spacing: 0.8px;
+    font-size: 13px;
+    width: 48vw;
+}
+
+.aboutus_process_bg button {
+    outline: none;
+    cursor: pointer;
+    padding: 10px 30px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+    color: #000;
+    background: var(--background);
+    border: none;
+    width: 20%;
+    margin: auto;
+    display: block;
+}
+
+/* Layout */
+.overflow-hidden {
+    background-color: #f9f9fa;
+}
+
+.aboutus_layout_img {
+    width: 100%;
+    height: 93.3%;
+}
+
+.overflow {
+  overflow: hidden;
+}
+
+.instagram-main-img {
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+  height: 93.3%; 
+}
+
+
+.instagram-secondary-img {
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+  height: auto;
+}
+
+.instagram-secondary-img:hover {
+  transform: scale(1.1);
+}
+
+/* media query */
+@media(max-width:1024px) {
+    .padding_left {
+        padding-left: 0px !important;
+    }
+
+    .aboutus_beginning p {
+        width: 45vw !important;
+    }
+
+    .aboutus_team {
+        padding: 0px 0px !important;
+    }
+}
+
+@media(max-width:991px) {
+    .aboutus_mission p {
+        width: 94vw;
+    }
+
+    .aboutus_beginning img {
+        width: 100% !important;
+    }
+
+    .process_bg {
+        padding-left: 10px !important;
+    }
+
+    .process_bg p {
+        width: 96vw;
+        font-size: 12.5px;
+    }
+
+    .aboutus_process_bg button {
+        width: 50%;
+    }
+
+    .instagram-main-img {
+        height: 100% !important;
+    }
+}
+
+@media(max-width:768px) {
+    .aboutus_who_are_we p {
+        font-size: 13px !important;
+    }
+
+    .aboutus_mission p {
+        font-size: 13px !important;
+        width: 93vw;
+        padding-left: 0px;
+    }
+
+    .promise-text {
+        padding-left: 25px !important;
+    }
+
+    .aboutus_advantages {
+        padding: 20px 0px !important;
+    }
+
+    .aboutus_advantages p {
+        display: none;
+    }
+
+    .advantages_div .d-flex {
+        display: block !important;
+        margin: auto;
+        text-align: center;
+    }
+
+    .aboutus_advantages h3 {
+        font-size: 10px;
+        padding-top: 25px;
+    }
+
+    .advantages_div {
+        padding: 18px !important;
+    }
+
+    .aboutus_beginning p {
+        font-size: 12px;
+        width: 90vw !important;
+    }
+
+    .aboutus_team div {
+        padding: 3px;
+    }
+
+    .aboutus_team h4 {
+        font-size: 15px;
+    }
+
+    .aboutus_team p {
+        font-size: 10px;
+    }
+
+    .advantage_two_bg p {
+        font-size: 12.5px;
+        width: 78vw;
+    }
+
+    .aboutus_testimonial_bg h2 {
+        font-size: 25px;
+    }
+}
+
+@media(max-width:426px) {
+    .team_p {
+        font-size: 12px;
+    }
+
+    .aboutus_testimonial_bg h2 {
+        font-size: 20px;
+        width: 90vw;
+    }
+
+    .aboutus_process_bg button {
+        width: 90% !important;
+    }
+
+    .featured-img {
+        margin: 0 20px !important;
+    }
+}
+
+@media(max-width:376px) {
+    .advantage_two_bg p {
+        width: 91vw;
+    }
+}

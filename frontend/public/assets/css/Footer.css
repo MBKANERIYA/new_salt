@@ -1,0 +1,114 @@
+.footer_sec p {
+    margin: 0;
+    padding-bottom: 12px;
+}
+
+.footer_sec p a,
+.footer_email_p {
+    text-decoration: none;
+    color: #000;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    word-spacing: 0.5px;
+}
+
+.footer_sec h6 {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    word-spacing: 0.5px;
+    font-size: 13px;
+    color: var(--color);
+}
+
+.footer_main {
+    border-top: 0.5px solid var(--color);
+    padding-top: 26px;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.faq-question {
+    background: #fff;
+    text-transform: uppercase;
+    color: var(--color);
+    padding: 5px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    letter-spacing: 0.6px;
+    font-size: 13px;
+}
+
+.faq-question:hover {
+    background: #fafafb;
+}
+
+.faq-answer {
+    display: none;
+    background: var(--light-color);
+    padding: 15px;
+    border-left: 1.3px solid var(--color);
+    font-size: 13px;
+    letter-spacing: 1px;
+    word-spacing: 0.5px;
+    color: #333;
+}
+
+.faq-answer p a {
+    color: #333 !important;
+    text-decoration: none !important;
+}
+
+.faq-answer p {
+    margin-bottom: 15px !important;
+}
+
+.faq-question.active+.faq-answer {
+    display: block;
+}
+
+.faq-question .toggle-icon {
+    font-size: 25px;
+    color: var(--color);
+}
+
+.faq-question.active .toggle-icon {
+    transform: rotate(45deg);
+}
+
+.app-download-container {
+    background: var(--light-color);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 6px auto;
+    text-align: center;
+}
+
+.app-title {
+    font-size: 17px;
+    font-weight: bold;
+    color: var(--color);
+}
+
+.app-description {
+    font-size: 11px;
+    color: #666;
+    margin-top: -5px;
+}
+
+.store-badge {
+    width: 133px;
+}
+
+.main-content {
+    padding-bottom: 60px !important;
+}

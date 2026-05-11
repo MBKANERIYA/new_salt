@@ -1,0 +1,55 @@
+.bg_contact {
+    position: relative;
+    /* Makes the section the parent for the pseudo-element */
+    background-image: url('https://media.tiffany.com/is/image/tiffanydm/2024_HOLIDAY_CUSTOMER-SERIVCE_LP_Desktop?$tile$&wid=2992&fmt=webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.contact_text_md {
+    text-align: center;
+    display: none;
+}
+
+.contact_text_md p {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.contact_text {
+    position: relative;
+    color: white;
+    font-size: 30px;
+    z-index: 2;
+    text-align: center;
+    left: 20%;
+}
+
+.contact_text h4,
+.contact_text_md h4 {
+    letter-spacing: 1.5px;
+    word-spacing: 1px;
+}
+
+.contact_text p {
+    font-size: 16px;
+    width: 29vw;
+    letter-spacing: 0.5px;
+}
+
+@media(max-width:900px) {
+    .contact_text {
+        display: none !important;
+    }
+
+    .contact_text_md {
+        display: block !important;
+    }
+}

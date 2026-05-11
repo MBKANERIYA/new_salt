@@ -1,0 +1,11 @@
+.admin_btn{
+    background-color: rgb(79, 50, 103) !important;
+}
+.main_admin{
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    border-radius: 10px;
+}
+.visible_icon{
+    border: 1px solid #ced4da !important;
+    border-left: 0px !important;
+}
