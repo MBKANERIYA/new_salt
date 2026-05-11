@@ -423,9 +423,9 @@ const Mainpage = () => {
     { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/Shaya/05-May/Responsive/08/Responsive_01.jpg' },  // 0 — Top grid left
     { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/05_MAY/Banner/11-11/01/UB_Desktop.jpg' },  // 1 — Top grid right-top
     { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/Summer/01/UB_Desktop.jpg' },  // 2 — Top grid right-bottom
-    { bannerImage: '/assets/img/grid_left_2.png' },   // 3 — Bottom grid left
-    { bannerImage: '/assets/img/grid_right_3.png' },  // 4 — Bottom grid right-top
-    { bannerImage: '/assets/img/grid_right_4.png' },  // 5 — Bottom grid right-bottom
+    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2025/CL/09_SEP/Banner/TreasureChest/02/Square_Desktop.jpg' },   // 3 — Bottom grid left
+    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/05_MAY/Banner/9kt/01/UB_Desktop.jpg' },  // 4 — Bottom grid right-top
+    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/ShayaDiamonds/01/UB_Desktop.jpg' },  // 5 — Bottom grid right-bottom
     { bannerImage: '/assets/img/promo_banner_1.png' }, // 6 (Web promo)
     { bannerImage: '/assets/img/promo_banner_1.png' }, // 7 (Mobile promo)
     { bannerImage: '/assets/img/promo_banner_2.png' }, // 8 (Web promo)
@@ -1184,80 +1184,59 @@ const Mainpage = () => {
           </div>
         </section> */}
 
-        {/* Gift (Second Instance) */}
-        <section className="container-fluid px-1 gift_sec_main">
-          {/* Grid layout for large devices */}
-          <div className="d-none d-lg-block d-md-block">
-            <div className="row m-0">
-              {gifts.map((gift) => (
-                <div key={gift.gift_id} className="col-lg-4 col-md-4 col-sm-12 col-12 p-0">
-                  <div className="card border-0 p-2">
-                    {
-                      gift.giftImage && gift.giftImage.endsWith(".mp4") ||
-                        gift.giftImage && gift.giftImage.endsWith(".mkv") ||
-                        gift.giftImage && gift.giftImage.endsWith(".avi") ? (
-                        <video
-                          src={gift.giftImage}
-                          className="img-fluid"
-                          style={{ borderRadius: "10px", objectFit: "cover" }}
-                          autoPlay
-                          playsInline
-                          muted
-                          loop
-                        />
-                      ) : (
-                        <img
-                          alt={gift.giftName}
-                          src={gift.giftImage}
-                          className="img-fluid"
-                          style={{ borderRadius: "10px", objectFit: "cover" }}
-                        />
-                      )}
-                    <div className="card-body text-center">
-                      <h5>{gift.giftName}</h5>
-                      <p className="line_hover">Shop Now &nbsp; &gt;</p>
-                    </div>
-                  </div>
+        {/* Bottom Banner */}
+        <section className="container-fluid mb-5">
+          <div className="row g-3 align-items-stretch">
+            {/* Left Side Banner (Single Image/Video) */}
+            <div className="col-lg-6 col-md-6 col-sm-12 d-flex banner-grid-left">
+              {bottomBanners.length > 0 && (
+                <div className="w-100">
+                  {bottomBanners[3] && (
+                    bottomBanners[3].bannerImage.endsWith(".mp4") ||
+                      bottomBanners[3].bannerImage.endsWith(".mkv") ||
+                      bottomBanners[3].bannerImage.endsWith(".avi") ? (
+                      <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="img-fluid w-100 h-100"
+                        style={{ borderRadius: "10px", objectFit: "cover" }}
+                      >
+                        <source src={bottomBanners[3].bannerImage} type="video/mp4" />
+                      </video>
+                    ) : (
+                      <img
+                        alt="Bottom Banner 1"
+                        src={bottomBanners[3].bannerImage}
+                        className="img-fluid w-100 h-100"
+                        style={{ borderRadius: "10px", objectFit: "cover" }}
+                      />
+                    )
+                  )}
                 </div>
-              ))}
+              )}
             </div>
-          </div>
 
-          {/* Carousel for mobile devices */}
-          <div className="d-lg-none d-md-none d-block">
-            <Slider {...graduate}>
-              {gifts.map((gift) => (
-                <div key={gift.gift_id} className="p-2">
-                  <div className="card border-0">
-                    {
-                      gift.giftImage && gift.giftImage.endsWith(".mp4") ||
-                        gift.giftImage && gift.giftImage.endsWith(".mkv") ||
-                        gift.giftImage && gift.giftImage.endsWith(".avi") ? (
-                        <video
-                          src={gift.giftImage}
-                          className="img-fluid"
-                          style={{ borderRadius: "10px", objectFit: "cover" }}
-                          autoPlay
-                          playsInline
-                          muted
-                          loop
-                        />
-                      ) : (
-                        <img
-                          alt={gift.giftName}
-                          src={gift.giftImage}
-                          className="img-fluid"
-                          style={{ borderRadius: "10px", objectFit: "cover" }}
-                        />
-                      )}
-                    <div className="card-body text-center">
-                      <h5>{gift.giftName}</h5>
-                      <p className="line_hover">Shop Now &nbsp; &gt;</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </Slider>
+            {/* Right Side Banners (Two Images, Equal Spacing) */}
+            <div className="col-lg-6 col-md-6 col-sm-12 d-flex flex-column gap-3 banner-grid-right">
+              {bottomBanners.length > 1 && (
+                <img
+                  alt="Bottom Banner 2"
+                  src={bottomBanners[4]?.bannerImage}
+                  className="img-fluid w-100"
+                  style={{ flex: 1, objectFit: "cover", borderRadius: "10px" }}
+                />
+              )}
+              {bottomBanners.length > 2 && (
+                <img
+                  alt="Bottom Banner 3"
+                  src={bottomBanners[5]?.bannerImage}
+                  className="img-fluid w-100"
+                  style={{ flex: 1, objectFit: "cover", borderRadius: "10px" }}
+                />
+              )}
+            </div>
           </div>
         </section>
 
