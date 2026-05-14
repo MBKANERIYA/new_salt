@@ -167,41 +167,16 @@ const Loginn = () => {
             localStorage.setItem('token', user.token);
             localStorage.setItem('userId', user._id);
             localStorage.setItem('user', JSON.stringify(user));
-    
-            const guestCart = JSON.parse(localStorage.getItem('cartItems')) || [];
-            const guestWishlist = (JSON.parse(localStorage.getItem('wishlist')) || []).map(item =>
-                typeof item === "string" ? { productId: item } : item
-            );
-    
-            console.log("Guest Cart Items Before Merge:", guestCart);
-    
-            if (guestCart.length > 0 || guestWishlist.length > 0) {
-                const cartProducts = guestCart.map(item => ({
-                    productId: item?.productId || item?.id,  // Ensure correct productId
-                    size: item?.size ? String(item.size) : "6",  // Default size if missing
-                    caratBy: item?.caratBy ? String(item.caratBy) : "14KT",  // Default caratBy if missing
-                    colorBy: item?.colorBy ? String(item.colorBy) : "Yellow Gold",  // Default color if missing
-                })).filter(item => item.productId); // Remove invalid entries
-    
-                console.log("Formatted Cart Data to Send:", cartProducts);
-    
-                const wishlistProducts = guestWishlist.map(item => ({
-                    productId: item.productId || item?.id,
-                    size: item?.size ? String(item.size) : "6",  // Default size if missing
-                    caratBy: item?.caratBy ? String(item.caratBy) : "14KT",  // Default caratBy if missing
-                    colorBy: item?.colorBy ? String(item.colorBy) : "Yellow Gold",  // Default color if missing
-                })) || [];
-    
-                console.log("Wishlist Data to Send:", wishlistProducts);
-    
+
+            const guestUserId = localStorage.getItem('guestUserId');
+
+            if (guestUserId) {
                 try {
                     const mergeResponse = await axios.post(
                         `${API_BASE_URL}/v1/merge/mergeCartAndWishlist`,
-                        { userId: user._id, cartProducts, wishlistProducts }
+                        { guestUserId, loggedInUserId: user._id }
                     );
-                    // console.log("Cart API Response:", JSON.stringify(mergeResponse.data, null, 2));
-                    console.log("Cart API Response:", mergeResponse.data)
-
+                    console.log("Cart API Response:", mergeResponse.data);
                 } catch (mergeError) {
                     console.error("Merge API Error:", mergeError.response?.data || mergeError.message);
                     toast.error("Failed to merge cart & wishlist");
@@ -209,6 +184,7 @@ const Loginn = () => {
             }
     
             localStorage.removeItem('wishlist');
+            localStorage.removeItem('guestUserId');
             localStorage.removeItem('guestUser');
     
             const userRes = await axios.get(`${API_BASE_URL}/api/users/profile`, {
@@ -218,8 +194,8 @@ const Loginn = () => {
             localStorage.setItem('user', JSON.stringify(userRes.data));
     
             toast.success("Login Successful!");
-            navigate("/")
-            window.location.reload(); // Commented to prevent navigation
+            navigate(-1);
+            // window.location.reload();
         } catch (err) {
             console.error("Login Error:", err.response?.data || err.message);
             toast.error(err.response?.data?.message || "Login failed");
@@ -245,13 +221,42 @@ const Loginn = () => {
         setLoading(true);
         try {
             const res = await axios.post(`${API_BASE_URL}/v1/otp/get-otp`, { email, otp });
-            localStorage.setItem('token', res.data.user.token);
-            localStorage.setItem('user', JSON.stringify(res.data.user));
-            dispatch(setUserData(res.data.user)); // Redux mein data set karna
+            const user = res.data.user;
+
+            if (!user || !user.token) {
+                throw new Error("Invalid user data received");
+            }
+
+            localStorage.setItem('token', user.token);
+            localStorage.setItem('userId', user._id);
+            localStorage.setItem('user', JSON.stringify(user));
+
+            const guestUserId = localStorage.getItem('guestUserId');
+
+            if (guestUserId) {
+                try {
+                    await axios.post(
+                        `${API_BASE_URL}/v1/merge/mergeCartAndWishlist`,
+                        { guestUserId, loggedInUserId: user._id }
+                    );
+                } catch (mergeError) {
+                    console.error("Merge API Error:", mergeError.response?.data || mergeError.message);
+                    toast.error("Failed to merge cart & wishlist");
+                }
+            }
+
+            localStorage.removeItem('wishlist');
+            localStorage.removeItem('guestUserId');
+            localStorage.removeItem('guestUser');
+
+            const userRes = await axios.get(`${API_BASE_URL}/api/users/profile`, {
+                headers: { 'Authorization': `Bearer ${user.token}` }
+            });
+
+            localStorage.setItem('user', JSON.stringify(userRes.data));
 
             toast.success("OTP Verified! Login successful.");
-            navigate('/');
-            window.location.reload();
+            navigate(-1);
         } catch (err) {
             toast.error("Invalid OTP. Please try again.");
         } finally {

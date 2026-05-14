@@ -1,5 +1,70 @@
 # Changelog
 
+## 2026-05-14 — Added Filter Functionality to "Gifts" Dropdown
+**What**: Updated the links in the "Gifts" dropdown menu to correctly filter products by gender. 
+**Why**: Clicking options like "Wife", "Daughter", and "Mother" should show female products, while "Husband", "Son", and "Father" should show male products. Previously they pointed to static placeholder pages or nowhere.
+**Files Changed**:
+- `frontend/src/Components/Header.jsx`
+- Updated the `<Link>` components under the Gifts dropdown so female options point to `/products?typeBy=female` and male options point to `/products?typeBy=male`.
+
+## 2026-05-14 — Made "Officewear" Banner Clickable
+**What**: Wrapped the "Officewear Jewellery" banner (`bottomBanners[1]`) on the homepage with a link to the products page applying the `occasionBy` filter.
+**Why**: To allow users to click the banner and be navigated directly to products tagged as "OFFICE WEAR", improving the shopping experience.
+**Files Changed**:
+- `frontend/src/Pages/Mainpage.jsx`
+- Wrapped `bottomBanners[1]` in a `<Link to="/products?occasionBy=OFFICE%20WEAR">` and preserved the grid spacing with inline flex styles.
+
+## 2026-05-14 — Applied Price Filter to "Under 29999" Banners
+**What**: Updated the `<Link>` URLs for the "Starting Under ₹29,999" promotional banners (indices 2, 6, and 7) to point to `/products?priceLimit=below20k,20kTo30k`.
+**Why**: Clicking the banners previously navigated to the main products page and showed all products. Passing the `priceLimit` query parameters ensures that the product listing is pre-filtered to accurately show only items priced under 30k.
+**Files Changed**:
+- `frontend/src/Pages/Mainpage.jsx`
+
+## 2026-05-14 — Made "Under 29999" Banner Clickable
+**What**: Wrapped the "Starting Under ₹29,999" banner (`bottomBanners[2]`) on the homepage with a link to the products page.
+**Why**: The user requested that this specific promotional banner be clickable to improve user navigation and naturally guide them to the product listings.
+**Files Changed**:
+- `frontend/src/Pages/Mainpage.jsx`
+- Wrapped the image element for `bottomBanners[2]` inside a `<Link to="/products">` and adjusted the inline styles (`display: "flex", flex: 1`) to preserve the grid layout spacing.
+
+## 2026-05-14 — Added Click Functionality to Promotional Banners
+**What**: Wrapped the web and mobile promotional banners on the homepage (the "Starting Under 29,999" banner) with a link to the products page.
+**Why**: The promotional banners displaying pricing offers were previously unclickable images. Making them clickable improves user experience and naturally guides users to the product listings.
+**Files Changed**:
+- `frontend/src/Pages/Mainpage.jsx`
+- Wrapped `bottomBanners[6]` and `bottomBanners[7]` in a `<Link to="/products">` and added `width: "100%"` to maintain responsiveness.
+
+## 2026-05-14 — Fixed Uneditable Billing Address Fields
+**What**: Fixed an issue where users were unable to type in the mobile number, first name, and last name fields under "Use a Different Billing Address" on the shipping page.
+**Why**: The input elements were hardcoded with `value={user?.mobileNumber || "Mobile"}` instead of being bound to the React state `billingData.mobile`. This forced the inputs to ignore user keystrokes. Furthermore, passing the string `"Mobile"` to an `<input type="number">` resulted in a blank and unresponsive field.
+**Files Changed**:
+- `frontend/src/Pages/Process/Shipping.jsx`
+- Updated the `billingData` state initialization to include `firstname`, `lastname`, and `mobile`.
+- Updated the input elements in the billing form to use `value={billingData.mobile}` (and correspondingly for `firstname`/`lastname`) so they correctly sync with user input.
+
+## 2026-05-14 — Fixed Razorpay Checkout Crash
+**What**: Fixed an issue where the backend crashed with `TypeError: Cannot read properties of null (reading 'total14KT')` during order creation.
+**Why**: When creating an order from the user's cart, the backend fetched items via `populate("quantity.productId")`. If a product in the cart was previously deleted from the database, its `productId` would return as `null`. Trying to read `total14KT` from this null value caused the entire Node server to crash, failing the payment initiation.
+**Files Changed**:
+- `backend/src/Controller/order.controller.js`
+- Added a `.filter(item => item.productId)` step to safely ignore deleted/null products before mapping over the cart array in both `createOrder` and `createRazorpayOrder`.
+
+## 2026-05-14 — Fixed Post-Login Cart Sync Bug
+**What**: Fixed the issue where the Order Summary gets 0 after login.
+**Why**: The frontend was sending an incorrect payload (`userId` and `cartProducts`) to the backend's `/v1/merge/mergeCartAndWishlist` API, which was expecting `{ guestUserId, loggedInUserId }`. As a result, guest carts were not being merged into the authenticated user's cart.
+**Files Changed**:
+- `frontend/src/Pages/Process/Login.jsx`
+- `frontend/src/Pages/Verify/Loginn.jsx`
+- Updated `handleLogin` and `handleVerifyOtp` to fetch `guestUserId` from localStorage and send it along with `loggedInUserId: user._id` to correctly trigger the backend database merge.
+- Added `localStorage.removeItem('guestUserId')` post-merge to clean up stale guest IDs.
+
+## 2026-05-14 — Fix Login Redirection Behavior
+**What**: Updated the login process so users are no longer incorrectly redirected back to the home page after successfully logging in.
+**Why**: The user reported that logging in during the checkout flow or via the main login page was redirecting them back to the home page (`/`), breaking their current flow and forcing them to navigate back manually.
+**Files Changed**:
+- `frontend/src/Pages/Process/Login.jsx` — Changed `navigate("/")` to `navigate("/shipping")`. Since this page is specifically the login step of the checkout flow, it now seamlessly continues the user to the shipping step.
+- `frontend/src/Pages/Verify/Loginn.jsx` — Changed `navigate("/")` to `navigate(-1)`. For standard non-checkout logins, it now safely returns the user to whatever page they were on prior to logging in.
+
 ## 2026-05-14 — Integrated Razorpay Payment Gateway
 **What**: Integrated Razorpay for processing online payments (Credit Card, Debit Card, UPI, Net Banking) during checkout.
 **Why**: The user provided Razorpay test credentials to enable real-time payment capture instead of showing "coming soon".

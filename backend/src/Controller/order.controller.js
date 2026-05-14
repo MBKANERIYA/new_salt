@@ -45,20 +45,22 @@ module.exports.createOrder = async (req, res) => {
             }
 
             // Build order items from cart
-            items = cart.quantity.map((item) => {
-                const product = item.productId;
-                const price = product.total14KT || 0;
-                return {
-                    productId: product.id || product._id,
-                    title: product.title || "Product",
-                    image: product.image01 || "",
-                    price: price,
-                    quantity: item.quantity || 1,
-                    colorBy: item.colorBy || "",
-                    caratBy: item.caratBy || "",
-                    size: item.size || "",
-                };
-            });
+            items = cart.quantity
+                .filter(item => item.productId)
+                .map((item) => {
+                    const product = item.productId;
+                    const price = product.total14KT || 0;
+                    return {
+                        productId: product.id || product._id,
+                        title: product.title || "Product",
+                        image: product.image01 || "",
+                        price: price,
+                        quantity: item.quantity || 1,
+                        colorBy: item.colorBy || "",
+                        caratBy: item.caratBy || "",
+                        size: item.size || "",
+                    };
+                });
             subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
         }
 
@@ -177,14 +179,16 @@ module.exports.createRazorpayOrder = async (req, res) => {
             }
 
             // Build order items from cart
-            items = cart.quantity.map((item) => {
-                const product = item.productId;
-                const price = product.total14KT || 0;
-                return {
-                    price: price,
-                    quantity: item.quantity || 1,
-                };
-            });
+            items = cart.quantity
+                .filter(item => item.productId)
+                .map((item) => {
+                    const product = item.productId;
+                    const price = product.total14KT || 0;
+                    return {
+                        price: price,
+                        quantity: item.quantity || 1,
+                    };
+                });
             subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
         }
 

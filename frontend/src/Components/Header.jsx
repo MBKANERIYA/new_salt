@@ -5107,7 +5107,7 @@ const Header = () => {
                                                             {/* <p className='pt-0 border-dropdown'>All Necklaces</p> */}
                                                             <ul className='ps-0'>
                                                                 <li>
-                                                                    <Link to="/earrings" className="d-flex align-items-center">
+                                                                    <Link to="/products?typeBy=female" className="d-flex align-items-center">
                                                                         <img
                                                                             alt='Jewelry Style'
                                                                             src='/assets/img/rings6.jpg'
@@ -5117,7 +5117,7 @@ const Header = () => {
                                                                     </Link>
                                                                 </li>
                                                                 <li>
-                                                                    <Link className="d-flex align-items-center">
+                                                                    <Link to="/products?typeBy=female" className="d-flex align-items-center">
                                                                         <img
                                                                             alt='Jewelry Style'
                                                                             src='/assets/img/rings7.jpg'
@@ -5127,7 +5127,7 @@ const Header = () => {
                                                                     </Link>
                                                                 </li>
                                                                 <li>
-                                                                    <Link className="d-flex align-items-center">
+                                                                    <Link to="/products?typeBy=female" className="d-flex align-items-center">
                                                                         <img
                                                                             alt='Jewelry Style'
                                                                             src='/assets/img/rings7.jpg'
@@ -5137,7 +5137,7 @@ const Header = () => {
                                                                     </Link>
                                                                 </li>
                                                                 <li>
-                                                                    <Link className="d-flex align-items-center">
+                                                                    <Link to="/products?typeBy=male" className="d-flex align-items-center">
                                                                         <img
                                                                             alt='Jewelry Style'
                                                                             src='/assets/img/rings7.jpg'
@@ -5152,7 +5152,7 @@ const Header = () => {
                                                             <ul className='ps-0'>
 
                                                                 <li>
-                                                                    <Link className="d-flex align-items-center">
+                                                                    <Link to="/products?typeBy=male" className="d-flex align-items-center">
                                                                         <img
                                                                             alt='Jewelry Style'
                                                                             src='/assets/img/rings7.jpg'
@@ -5162,7 +5162,7 @@ const Header = () => {
                                                                     </Link>
                                                                 </li>
                                                                 <li>
-                                                                    <Link className="d-flex align-items-center">
+                                                                    <Link to="/products?typeBy=male" className="d-flex align-items-center">
                                                                         <img
                                                                             alt='Jewelry Style'
                                                                             src='/assets/img/rings7.jpg'

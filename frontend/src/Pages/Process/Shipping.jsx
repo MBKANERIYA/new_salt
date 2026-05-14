@@ -558,11 +558,15 @@ const Shipping = () => {
         mobile: '',
     });
     const [billingData, setBillingData] = useState({
+        firstname: '',
+        lastname: '',
         street: '',
+        additionalInfo: '',
         postalCode: '',
         city: '',
         state: '',
         country: '',
+        mobile: '',
     });
 
     useEffect(() => {
@@ -824,11 +828,15 @@ const Shipping = () => {
 
         if (selectedBillingOption === "ShippingAddress") {
             setBillingData({
+                firstname: selectedAddress.firstname || prev.firstname || '',
+                lastname: selectedAddress.lastname || prev.lastname || '',
                 street: selectedAddress.street || '',
+                additionalInfo: selectedAddress.additionalInfo || '',
                 postalCode: selectedAddress.postalCode || '',
                 city: selectedAddress.city || '',
                 state: selectedAddress.state || '',
                 country: selectedAddress.country || '',
+                mobile: selectedAddress.mobile || prev.mobile || '',
             });
         }
     };
@@ -1047,10 +1055,10 @@ const Shipping = () => {
                                             <form>
                                                 <div className="row my-4 delivery_modal">
                                                     <div className="col">
-                                                        <input type="text" className="form-control" placeholder="First Name" name="firstname" value={user?.firstName || "firstName"} onChange={handleBillingChange} />
+                                                        <input type="text" className="form-control" placeholder="First Name" name="firstname" value={billingData.firstname} onChange={handleBillingChange} />
                                                     </div>
                                                     <div className="col">
-                                                        <input type="text" className="form-control" placeholder="Last Name" name="lastname" value={user?.lastName || "lastName"} onChange={handleBillingChange} />
+                                                        <input type="text" className="form-control" placeholder="Last Name" name="lastname" value={billingData.lastname} onChange={handleBillingChange} />
                                                     </div>
                                                 </div>
                                                 <div className="row my-4 delivery_modal">
@@ -1060,7 +1068,7 @@ const Shipping = () => {
                                                 </div>
                                                 <div className="row my-4 delivery_modal">
                                                     <div className="col">
-                                                        <input type="text" className="form-control" placeholder="Additional Information (optional)" name="hnumber" />
+                                                        <input type="text" className="form-control" placeholder="Additional Information (optional)" name="additionalInfo" value={billingData.additionalInfo} onChange={handleBillingChange} />
                                                     </div>
                                                 </div>
                                                 <div className="row my-4 delivery_modal">
@@ -1081,7 +1089,7 @@ const Shipping = () => {
                                                 </div>
                                                 <div className="row my-4 delivery_modal">
                                                     <div className="col">
-                                                        <input type="number" className="form-control" placeholder="Mobile Number" name="mobile" value={user?.mobileNumber || "Mobile"} onChange={handleBillingChange} />
+                                                        <input type="number" className="form-control" placeholder="Mobile Number" name="mobile" value={billingData.mobile} onChange={handleBillingChange} />
                                                     </div>
                                                 </div>
                                             </form>

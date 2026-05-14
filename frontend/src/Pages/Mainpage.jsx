@@ -821,20 +821,24 @@ const Mainpage = () => {
             {/* Right Side Banners (Two Images, Equal Spacing) */}
             <div className="col-lg-6 col-md-6 col-sm-12 d-flex flex-column gap-3 banner-grid-right">
               {bottomBanners.length > 1 && (
-                <img
-                  alt="Bottom Banner 2"
-                  src={bottomBanners[1]?.bannerImage}
-                  className="img-fluid w-100"
-                  style={{ flex: 1, objectFit: "cover", borderRadius: "10px" }}
-                />
+                <Link to="/products?occasionBy=OFFICE%20WEAR" style={{ display: "flex", flex: 1, textDecoration: "none" }}>
+                  <img
+                    alt="Bottom Banner 2"
+                    src={bottomBanners[1]?.bannerImage}
+                    className="img-fluid w-100"
+                    style={{ flex: 1, objectFit: "cover", borderRadius: "10px" }}
+                  />
+                </Link>
               )}
               {bottomBanners.length > 2 && (
-                <img
-                  alt="Bottom Banner 3"
-                  src={bottomBanners[2]?.bannerImage}
-                  className="img-fluid w-100"
-                  style={{ flex: 1, objectFit: "cover", borderRadius: "10px" }}
-                />
+                <Link to="/products?priceLimit=below20k,20kTo30k" style={{ display: "flex", flex: 1, textDecoration: "none" }}>
+                  <img
+                    alt="Bottom Banner 3"
+                    src={bottomBanners[2]?.bannerImage}
+                    className="img-fluid w-100"
+                    style={{ flex: 1, objectFit: "cover", borderRadius: "10px" }}
+                  />
+                </Link>
               )}
             </div>
           </div>
@@ -1257,13 +1261,13 @@ const Mainpage = () => {
         {/* Latest design */}
         <section className="container-fluid pb-5">
           {bottomBanners?.length >= 8 && (
-            <>
+            <Link to="/products?priceLimit=below20k,20kTo30k" className="text-decoration-none">
               {/* Web Banner (7th Banner - Index 6) */}
               <img
                 alt="Web Banner"
                 src={bottomBanners[6]?.bannerImage}
                 className="img-fluid d-none d-md-block promo-banner"
-                style={{ borderRadius: "10px", objectFit: "cover" }}
+                style={{ borderRadius: "10px", objectFit: "cover", width: "100%" }}
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.style.display = "none";
@@ -1281,7 +1285,7 @@ const Mainpage = () => {
                 alt="Mobile Banner"
                 src={bottomBanners[7]?.bannerImage}
                 className="img-fluid d-md-none promo-banner"
-                style={{ borderRadius: "10px", objectFit: "cover" }}
+                style={{ borderRadius: "10px", objectFit: "cover", width: "100%" }}
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.style.display = "none";
@@ -1293,7 +1297,7 @@ const Mainpage = () => {
                   }
                 }}
               />
-            </>
+            </Link>
           )}
         </section>
 
