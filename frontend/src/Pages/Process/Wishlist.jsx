@@ -149,7 +149,7 @@ const Wishlist = () => {
                   wishlistItems.map((item) => (
                     <div key={item.productId.product_id} className='col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6'>
                       <div className='card border-0'>
-                        <Link to={`/Productdetails/${item.productId.product_id}`}>
+                        <Link to={`/Productdetails/${item.productId.title ? item.productId.title.replace(/[\s/]+/g, '-').toLowerCase() : item.productId.product_id}`}>
                           <img alt={item.productId.title} src={item.productId.image01} className='position-relative img-fluid'
                             onError={(e) => {
                               e.target.onerror = null;
@@ -339,7 +339,7 @@ export default Wishlist;
 //                 : wishlistItems.map((item) => (
 //                     <div key={item.productId.product_id} className='col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6' data-aos="zoom-in-up" data-aos-duration="2000">
 //                       <div className='card border-0'>
-//                         <Link to={`/Productdetails/${item.productId.product_id}`}>
+//                         <Link to={`/Productdetails/${item.productId.title ? item.productId.title.replace(/[\s/]+/g, '-').toLowerCase() : item.productId.product_id}`}>
 //                           <img alt={item.productId.title} src={item.productId.image01} className='position-relative img-fluid'></img>
 //                         </Link>
 //                         <div className='card-body d-flex justify-content-between align-items-center'>

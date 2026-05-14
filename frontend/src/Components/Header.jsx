@@ -2821,7 +2821,7 @@ import API_BASE_URL from '../Utils/apiConfig.js';
 //                                             className="card border-0 w-100 mx-auto d-block"
 //                                             key={item.id}
 //                                         >
-//                                             <Link to={`/Productdetails/${item.id}`}>
+//                                             <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.id}`}>
 //                                                 <img
 //                                                     alt={item.title}
 //                                                     src={item.goldImages[0]}
@@ -2931,7 +2931,7 @@ import API_BASE_URL from '../Utils/apiConfig.js';
 //                                             className="card border-0 w-100 mx-auto d-block"
 //                                             key={item.id}
 //                                         >
-//                                             <Link to={`/Productdetails/${item.id}`}>
+//                                             <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.id}`}>
 //                                                 <img
 //                                                     alt={item.title}
 //                                                     src={item.goldImages[0]}
@@ -5248,7 +5248,7 @@ const Header = () => {
                                 defaultProducts.map((item) => (
                                     <div className="col-lg-6 px-4 " key={item.product_id}>
                                         <div className="search-item ">
-                                            <Link to={`/Productdetails/${item.product_id}`} className="text-decoration-none text-dark" data-bs-dismiss="offcanvas" aria-label="Close">
+                                            <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.product_id}`} className="text-decoration-none text-dark" data-bs-dismiss="offcanvas" aria-label="Close">
                                                 <div className="left">
                                                     <img
                                                         src={item.goldImages?.[0] || item.image01}
@@ -5275,7 +5275,7 @@ const Header = () => {
                                     filteredProducts.map((item) => (
                                         <div className="col-lg-6 px-4" key={item._id}>
                                             <div className="search-item">
-                                                <Link to={`/Productdetails/${item._id}`} className="text-decoration-none text-dark" data-bs-dismiss="offcanvas" aria-label="Close">
+                                                <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item._id}`} className="text-decoration-none text-dark" data-bs-dismiss="offcanvas" aria-label="Close">
                                                     <div className="left">
                                                         <img
                                                             src={item.image01}
@@ -5324,7 +5324,7 @@ const Header = () => {
                                             className="card border-0 w-100 mx-auto d-block px-1"
                                             key={item.id}
                                         >
-                                            <Link to={`/Productdetails/${item.id}`} data-bs-dismiss="offcanvas" aria-label="Close">
+                                            <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.id}`} data-bs-dismiss="offcanvas" aria-label="Close">
                                                 <img
                                                     alt={item.title}
                                                     src={item.images?.[0]}
@@ -5411,7 +5411,7 @@ const Header = () => {
                                     defaultProducts.map((item) => (
                                         <div className="col-lg-6 px-4" key={item.product_id}>
                                             <div className="search-item">
-                                                <Link to={`/Productdetails/${item.product_id}`} className="text-decoration-none text-dark" data-bs-dismiss="offcanvas" aria-label="Close">
+                                                <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.product_id}`} className="text-decoration-none text-dark" data-bs-dismiss="offcanvas" aria-label="Close">
                                                     <div className="left">
                                                         <img
                                                             src={item.goldImages?.[0] || item.image01}
@@ -5438,7 +5438,7 @@ const Header = () => {
                                         filteredProducts.map((item) => (
                                             <div className="col-lg-6 px-4" key={item._id}>
                                                 <div className="search-item">
-                                                    <Link to={`/Productdetails/${item._id}`} className="text-decoration-none text-dark" data-bs-dismiss="offcanvas" aria-label="Close">
+                                                    <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item._id}`} className="text-decoration-none text-dark" data-bs-dismiss="offcanvas" aria-label="Close">
                                                         <div className="left">
                                                             <img
                                                                 src={item.image01}
@@ -5488,7 +5488,7 @@ const Header = () => {
                                             className="card border-0 w-100 mx-auto d-block"
                                             key={item.id}
                                         >
-                                            <Link to={`/Productdetails/${item.id}`} data-bs-dismiss="offcanvas" aria-label="Close">
+                                            <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.id}`} data-bs-dismiss="offcanvas" aria-label="Close">
                                                 <img
                                                     alt={item.title}
                                                     src={item.images?.[0]}

@@ -1,5 +1,42 @@
 # Changelog
 
+## 2026-05-14 — Integrated Razorpay Payment Gateway
+**What**: Integrated Razorpay for processing online payments (Credit Card, Debit Card, UPI, Net Banking) during checkout.
+**Why**: The user provided Razorpay test credentials to enable real-time payment capture instead of showing "coming soon".
+**Files Changed**:
+- `backend/package.json` — Installed `razorpay` dependency.
+- `backend/src/Controller/order.controller.js` — Initialized Razorpay with the provided test keys. Added `createRazorpayOrder` to calculate total checkout amount and create an order, and `verifyRazorpayPayment` to verify payment signatures via crypto HMAC hashing. Updated `createOrder` to mark `paymentStatus` as `paid` for non-COD options. Fixed `createOrder` and `createRazorpayOrder` to correctly handle the "Buy Now" flow where the user bypasses the cart.
+- `backend/src/Routes/v1/order.routes.js` — Exposed `/create-razorpay-order` and `/verify-razorpay-payment` API routes.
+- `frontend/src/Pages/Process/Payment.jsx` — Dynamically injected the Razorpay checkout script. Fixed a bug where `userId` was scoped incorrectly, causing online payments to fail. Updated both COD and online payment flows to send `buyNowItem` to the backend and clear it upon successful order.## 2026-05-14 — Enable Multiple Category Selection in Sidebar
+**What**: Updated the filter sidebar to allow selecting multiple categories simultaneously (e.g., Rings AND Earrings) instead of just navigating between single category pages.
+**Why**: The user wanted to be able to filter by multiple categories at once from the sidebar.
+**Files Changed**:
+- `frontend/src/Category/Collection.jsx` — Added `categoryBy` to the filter state, synced it with URL search params, and updated `fetchProducts` to send an array of categories to the backend. Also updated the page title to reflect all selected categories. Fixed a bug where having only a `categoryBy` filter applied without any other filters or route parameters caused it to inadvertently fetch all 60 products.
+- `frontend/src/Filter/Filter.jsx` — Converted the Category checkboxes into multi-select toggles. Updated the "Shop by Style" section to automatically group subcategories under their respective category headings (e.g., "Rings", "Earrings") when multiple categories are selected, making it much easier to read and navigate.
+- `frontend/src/Filter/Mdfilter.jsx` — Converted the Category checkboxes from simple navigation links into multi-select toggles that update the `categoryBy` query parameter.
+## 2026-05-14 — Fix Subcategory Filter URL Fallback Issue
+**What**: Fixed a bug where clearing a subcategory filter (like "Engagement Rings") from the sidebar would still fetch products for that subcategory if the URL path included the subcategory.
+**Why**: The user wanted to see all products in the main category when they explicitly cleared the subcategory filter, but the application was falling back to the URL path's subcategory.
+**Files Changed**:
+- `frontend/src/Category/Collection.jsx` — Removed the `else if (subCat)` fallback block in `fetchProducts` that was overriding an explicitly cleared `filters.occasionBy` array.
+
+## 2026-05-13 — Switched Product Details URL to Title Slug
+**What**: Modified the routing and backend logic to use the product's formatted title (slug) in the URL instead of the raw database ID.
+**Why**: The user requested that the URL for the product details page display the product title instead of the product ID.
+**Files Changed**:
+- `backend/src/Routes/v1/upload_routes.js` — Updated `get_id/:id` and `get_similar/:id` routes to support fetching products using a case-insensitive regex match against the title slug if the provided `id` parameter is not a valid Mongo ObjectId.
+- `backend/src/Controller/rating.controller.js` — Updated `resolveProductId` to properly map a title slug back to the original `_id` so that ratings still fetch/post correctly.
+- `frontend/src/Pages/Mainpage.jsx`, `frontend/src/Category/Collection.jsx`, `frontend/src/Components/Header.jsx`, `frontend/src/Pages/Process/Cart.jsx`, `frontend/src/Pages/Process/Wishlist.jsx`, `frontend/src/Pages/Product/productCard.jsx`, `frontend/src/Pages/Product/Productdetails.jsx` — Replaced all instances of `/Productdetails/${id}` with `/Productdetails/${title_slug}`.
+
+## 2026-05-13 — Added Privillage Page
+- `frontend/src/Pages/Privillage.jsx` — Created new file with the provided React component, imported its stylesheet, and swapped the hero images for `p1.png` and `p2.png`.
+- `frontend/src/Pages/Privillage.css` — Created a new CSS file providing rich, premium styles with gradients, hover effects, and responsive grids for the privilege tiers and FAQ.
+- `frontend/src/Components/Router.jsx` — Imported `Privillage` and added `<Route path="/privilege" element={<Privillage />} />`.
+## 2026-05-13 — Update Web and Mobile Banners in Mainpage
+**What**: Updated the hero sections in `Mainpage.jsx` to render custom `d1, d2, d3` assets for desktop and `m1, m2, m3` for mobile. Added conditional logic to dynamically render `<video>` for `.mp4` and `<img>` for `.png` files. Updated the Top Banner grid section to use `b1.mp4`, `b2.png`, and `b3.png`. Updated the Bottom Banner grid section to use `c1.mp4`, `c2.png`, and `c3.png`. Set `di1.png` and `di2.png` for the desktop and mobile views of the Latest Design promo banner. Set `p1.png` and `p2.png` for the desktop and mobile views of the bottom Privilege Banner section, and wrapped it in a `<Link to="/privilege">`.
+**Why**: The user requested setting specific custom assets (`d1-3`, `m1-3`, `b1-3`, `c1-3`, `di1-2`, and `p1-2`) across multiple banner sections including the hero, grids, promo banners, and bottom privilege banners. The privilege banner was also made clickable.
+**Files Changed**:
+- `frontend/src/Pages/Mainpage.jsx` — Replaced placeholder mapped images with the correct local assets array for sliders, added conditional rendering for video files, updated `LOCAL_BOTTOM_BANNERS` with the new grid banner, promo banner, and privilege banner assets, and wrapped the privilege banner with a `Link` tag.
 ## 2026-05-11 — Make Homepage Images Smaller & Fit Perfectly in Sections
 **What**: Reduced all homepage image sizes, constrained them to fit perfectly within their section containers, and generated 25 new premium images tailored to each section's dimensions.
 **Why**: Images were too large, causing disproportionate sections and excessive scrolling. Old images had inconsistent sizes and some were tiny/broken. Now every section has uniform, compact, high-quality images.
@@ -9,7 +46,6 @@
 - **Category grid images** (`shop_category`): Fixed 220px height. Generated 6 new category images on teal backgrounds (`cat_necklaces`, `cat_earrings`, `cat_bracelets`, `cat_rings`, `cat_engagement`, `cat_home`)
 - **Filter categories** ("Wrapped with love"): Generated 6 themed images (`filter_gifts_her`, `filter_gifts_him`, `filter_anniversary`, `filter_wedding`, `filter_birthday`, `filter_under500`). Added click functionality with dynamic query parameters (`typeBy=female`, `occasionBy=ENGAGEMENT`, etc.). Changed the last option from "Under $500" to "Under ₹50,000" and added `below50k` price logic to backend.
 - **Top banner grid**: Replaced the first 3 generated images with custom Caratlane promotional images per user request.
-- **Removed duplicate sections**: Deleted the redundant "Bottom Banner" grid and a duplicate "New Arrivals" block to clean up the homepage layout.
 - **Gift section**: Fixed 320px height. Generated 3 gift wrap images (`gift_wrap_1–3.png`)
 - **Full-width promo banners**: New `promo-banner` class with 340px max-height. Generated 2 panoramic promo banners
 - **Salt Promise icons**: Constrained to 36×36px

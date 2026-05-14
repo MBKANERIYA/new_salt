@@ -11,4 +11,8 @@ router.get("/getOrders/:userId", orderController.getOrders);
 // Get single order by orderId
 router.get("/getOrder/:orderId", orderController.getOrderById);
 
+// Razorpay integration
+router.post("/create-razorpay-order", orderController.createRazorpayOrder);
+router.post("/verify-razorpay-payment", orderController.verifyRazorpayPayment);
+
 module.exports = router;

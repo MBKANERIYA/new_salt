@@ -420,16 +420,16 @@ const Mainpage = () => {
   ];
 
   const LOCAL_BOTTOM_BANNERS = [
-    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/Shaya/05-May/Responsive/08/Responsive_01.jpg' },  // 0 — Top grid left
-    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/05_MAY/Banner/11-11/01/UB_Desktop.jpg' },  // 1 — Top grid right-top
-    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/Summer/01/UB_Desktop.jpg' },  // 2 — Top grid right-bottom
-    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2025/CL/09_SEP/Banner/TreasureChest/02/Square_Desktop.jpg' },   // 3 — Bottom grid left
-    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/05_MAY/Banner/9kt/01/UB_Desktop.jpg' },  // 4 — Bottom grid right-top
-    { bannerImage: 'https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/ShayaDiamonds/01/UB_Desktop.jpg' },  // 5 — Bottom grid right-bottom
-    { bannerImage: '/assets/img/promo_banner_1.png' }, // 6 (Web promo)
-    { bannerImage: '/assets/img/promo_banner_1.png' }, // 7 (Mobile promo)
-    { bannerImage: '/assets/img/promo_banner_2.png' }, // 8 (Web promo)
-    { bannerImage: '/assets/img/promo_banner_2.png' }, // 9 (Mobile promo)
+    { bannerImage: '/assets/img/b1.mp4' },  // 0 — Top grid left
+    { bannerImage: '/assets/img/b2.png' },  // 1 — Top grid right-top
+    { bannerImage: '/assets/img/b3.png' },  // 2 — Top grid right-bottom
+    { bannerImage: '/assets/img/c1.mp4' },  // 3 — Bottom grid left
+    { bannerImage: '/assets/img/c2.png' },  // 4 — Bottom grid right-top
+    { bannerImage: '/assets/img/c3.png' },  // 5 — Bottom grid right-bottom
+    { bannerImage: '/assets/img/di1.png' }, // 6 (Web promo)
+    { bannerImage: '/assets/img/di2.png' }, // 7 (Mobile promo)
+    { bannerImage: '/assets/img/p1.png' }, // 8 (Web promo)
+    { bannerImage: '/assets/img/p2.png' }, // 9 (Mobile promo)
   ];
 
   const LOCAL_CATEGORIES = [
@@ -677,10 +677,9 @@ const Mainpage = () => {
   };
 
   // Product Click and open productdetails page
-  const handleProductClick = (id) => {
-    // navigate(`/product/${id}`); // Navigate to ProductDetails page with the product ID
-    navigate(`/Productdetails/${id}`); // Navigate to ProductDetails page with the product ID
-    // console.log(id);
+  const handleProductClick = (id, title) => {
+    const slug = title ? title.replace(/[\s/]+/g, '-').toLowerCase() : id;
+    navigate(`/Productdetails/${slug}`);
   };
   return (
     <Helmet title="Home">
@@ -724,95 +723,65 @@ const Mainpage = () => {
 
         {/* Web Banners */}
         <section className="container-fluid mb-5 d-lg-block d-md-block d-none">
-          {banners && banners.length > 0 ? (
-            <Slider {...webBanners}>
-              {banners.map((banner, index) => {
-                const src = banner.bannerImage;
-                const isVideo =
-                  banner.type === "goldVideo" ||
-                  (src && (src.endsWith(".mp4") || src.endsWith(".mkv") || src.endsWith(".avi")));
-
-                return (
-                  <div key={banner.banner_id || index}>
-                    {isVideo ? (
-                      <video
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="img-fluid w-100"
-                        style={{ borderRadius: "10px", objectFit: "cover" }}
-                      >
-                        <source src={src} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
-                    ) : (
-                      <Link to="products">
-                        <img
-                          alt={`Banner ${index + 1}`}
-                          src={src}
-                          className="img-fluid banner_class"
-                          style={{ borderRadius: "10px", objectFit: "cover", width: "100%" }}
-                        />
-                      </Link>
-                    )}
-                  </div>
-                );
-              })}
-            </Slider>
-          ) : (
-            <Slider {...webBanners}>
-              <Shimmer type="banner" />
-            </Slider>
-          )}
+          <Slider {...webBanners}>
+            {['/assets/img/d1.png', '/assets/img/d2.mp4', '/assets/img/d3.png'].map((src, index) => (
+              <div key={index}>
+                <Link to="products">
+                  {src.endsWith('.mp4') ? (
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="img-fluid banner_class"
+                      style={{ borderRadius: "10px", objectFit: "contain", width: "100%" }}
+                    >
+                      <source src={src} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <img
+                      alt={`Banner ${index + 1}`}
+                      src={src}
+                      className="img-fluid banner_class"
+                      style={{ borderRadius: "10px", objectFit: "contain", width: "100%" }}
+                    />
+                  )}
+                </Link>
+              </div>
+            ))}
+          </Slider>
         </section>
 
 
         {/* Mobile Banners */}
         <section className="container-fluid d-lg-none d-md-none d-block mb-5">
-          {banners?.length > 0 ? (
-            <Slider {...mobileBanners}>
-              {banners.map((banner, index) => {
-                const src = banner.mobileBannerImage || banner.bannerImage;
-                const isVideo =
-                  banner.type === "goldVideo" ||
-                  (src && (src.endsWith(".mp4") || src.endsWith(".mkv") || src.endsWith(".avi")));
-
-                return (
-                  <div key={banner.banner_id || index}>
-                    {isVideo ? (
-                      <video
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="img-fluid w-100"
-                        style={{ borderRadius: "10px", objectFit: "cover" }}
-                      >
-                        <source src={src} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
-                    ) : (
-                      <Link to="products">
-                        <img
-                          alt={`Banner ${index + 1}`}
-                          src={src}
-                          className="img-fluid banner_class"
-                          style={{ borderRadius: "10px", objectFit: "cover", width: "100%" }}
-                        />
-                      </Link>
-                    )}
-                  </div>
-                );
-              })}
-            </Slider>
-          ) : (
-            <Slider {...mobileBanners}>
-              {[...Array(1)].map((_, index) => (
-                <Shimmer key={index} type="banner" />
-              ))}
-            </Slider>
-          )}
+          <Slider {...mobileBanners}>
+            {['/assets/img/m1.png', '/assets/img/m2.mp4', '/assets/img/m3.png'].map((src, index) => (
+              <div key={index}>
+                <Link to="products">
+                  {src.endsWith('.mp4') ? (
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="img-fluid banner_class"
+                      style={{ borderRadius: "10px", objectFit: "contain", width: "100%" }}
+                    >
+                      <source src={src} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <img
+                      alt={`Banner ${index + 1}`}
+                      src={src}
+                      className="img-fluid banner_class"
+                      style={{ borderRadius: "10px", objectFit: "contain", width: "100%" }}
+                    />
+                  )}
+                </Link>
+              </div>
+            ))}
+          </Slider>
         </section>
 
         {/* topBanner */}
@@ -888,8 +857,8 @@ const Mainpage = () => {
                 {solitaires.length > 0 ? (
                   <Slider ref={solitaire} {...solitaireSlider}>
                     {solitaires.slice(9,13).map((item) => (
-                      <div className='card border-0 px-1' key={item.product_id} onClick={() => handleProductClick(item.product_id)}>
-                        <Link to={`/Productdetails/${item.product_id}`} className='text-decoration-none'>
+                      <div className='card border-0 px-1' key={item.product_id} onClick={() => handleProductClick(item.product_id, item.title)}>
+                        <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.product_id}`} className='text-decoration-none'>
                           <img
                             alt={item.title}
                             src={item.image01}
@@ -985,8 +954,8 @@ const Mainpage = () => {
                 {products.length > 0 ? (
                   <Slider ref={solitaire} {...solitaireSlider}>
                     {products.slice(37, 42).map((item) => (
-                      <div className='card border-0 px-1 bg-transparent' key={item.product_id} onClick={() => handleProductClick(item.product_id)}>
-                        <Link to={`/Productdetails/${item.product_id}`} className='text-decoration-none'>
+                      <div className='card border-0 px-1 bg-transparent' key={item.product_id} onClick={() => handleProductClick(item.product_id, item.title)}>
+                        <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.product_id}`} className='text-decoration-none'>
                           <img
                             alt={item.title}
                             src={item.goldImages?.[0] || item.image01}
@@ -1039,7 +1008,7 @@ const Mainpage = () => {
                   <Slider ref={arrvial} {...newarrivals}>
                     {newArrivals.slice(0, 4).map((item) => (
                       <div className="card border-0 px-1" key={item.product_id}>
-                        <Link to={`/Productdetails/${item.product_id}`} className="text-decoration-none">
+                        <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.product_id}`} className="text-decoration-none">
                           <img
                             alt={item.title}
                             src={item.image01}
@@ -1142,7 +1111,7 @@ const Mainpage = () => {
                   <Slider ref={arrvial} {...newarrivals}>
                     {newArrivals.slice(0, 4).map((item) => (
                       <div className="card border-0 px-1" key={item.product_id}>
-                        <Link to={`/Productdetails/${item.product_id}`} className="text-decoration-none">
+                        <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.product_id}`} className="text-decoration-none">
                           <img
                             alt={item.title}
                             src={item.image01}
@@ -1341,8 +1310,8 @@ const Mainpage = () => {
                 {products.length > 0 ? (
                   <Slider ref={solitaire} {...solitaireSlider}>
                     {products.slice(37, 42).map((item) => (
-                      <div className='card border-0 px-1 bg-transparent' key={item.product_id} onClick={() => handleProductClick(item.product_id)}>
-                        <Link to={`/Productdetails/${item.product_id}`} className='text-decoration-none'>
+                      <div className='card border-0 px-1 bg-transparent' key={item.product_id} onClick={() => handleProductClick(item.product_id, item.title)}>
+                        <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.product_id}`} className='text-decoration-none'>
                           <img
                             alt={item.title}
                             src={item.goldImages?.[0] || item.image01}
@@ -1495,13 +1464,13 @@ const Mainpage = () => {
         {/* Privilage Banner */}
         <section className="container-fluid pb-4">
           {bottomBanners?.length >= 8 && (
-            <>
+            <Link to="/privilege" className="text-decoration-none">
               {/* Web Banner (7th Banner - Index 6) */}
               <img
                 alt="Web Banner"
                 src={bottomBanners[8]?.bannerImage}
                 className="img-fluid d-none d-md-block promo-banner"
-                style={{ borderRadius: "10px", objectFit: "cover" }}
+                style={{ borderRadius: "10px", objectFit: "cover", width: "100%" }}
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.style.display = "none";
@@ -1519,7 +1488,7 @@ const Mainpage = () => {
                 alt="Mobile Banner"
                 src={bottomBanners[9]?.bannerImage}
                 className="img-fluid d-md-none promo-banner"
-                style={{ borderRadius: "10px", objectFit: "cover" }}
+                style={{ borderRadius: "10px", objectFit: "cover", width: "100%" }}
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.style.display = "none";
@@ -1531,7 +1500,7 @@ const Mainpage = () => {
                   }
                 }}
               />
-            </>
+            </Link>
           )}
         </section>
 

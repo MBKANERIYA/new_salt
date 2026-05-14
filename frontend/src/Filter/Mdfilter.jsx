@@ -44,6 +44,7 @@ const Mdfilter = ({ onFilterApply, initialFilters }) => {
 
     // Filter state — only filter-specific fields, no title/subCategory
     const [filters, setFilters] = useState({
+        categoryBy: initialFilters?.categoryBy || [],
         occasionBy: initialFilters?.occasionBy || [],
         priceLimit: initialFilters?.priceLimit || [],
         typeBy: initialFilters?.typeBy || [],
@@ -55,6 +56,7 @@ const Mdfilter = ({ onFilterApply, initialFilters }) => {
     // Sync when parent filters change
     useEffect(() => {
         setFilters({
+            categoryBy: initialFilters?.categoryBy || [],
             occasionBy: initialFilters?.occasionBy || [],
             priceLimit: initialFilters?.priceLimit || [],
             typeBy: initialFilters?.typeBy || [],
@@ -63,6 +65,7 @@ const Mdfilter = ({ onFilterApply, initialFilters }) => {
             featured: initialFilters?.featured || "",
         });
     }, [
+        JSON.stringify(initialFilters?.categoryBy),
         JSON.stringify(initialFilters?.occasionBy),
         JSON.stringify(initialFilters?.priceLimit),
         JSON.stringify(initialFilters?.typeBy),
@@ -102,6 +105,7 @@ const Mdfilter = ({ onFilterApply, initialFilters }) => {
 
     const clearFilters = () => {
         const empty = {
+            categoryBy: [],
             occasionBy: [],
             priceLimit: [],
             typeBy: [],
@@ -223,17 +227,31 @@ const Mdfilter = ({ onFilterApply, initialFilters }) => {
                                                         className="form-check-input"
                                                         type="checkbox"
                                                         id={`md-cat-${cat.id}`}
-                                                        checked={currentCategory === cat.id}
+                                                        checked={filters.categoryBy?.length > 0 ? filters.categoryBy.includes(cat.id) : currentCategory === cat.id}
                                                         onChange={() => {
-                                                            if (currentCategory !== cat.id) {
-                                                                // Close offcanvas when navigating
-                                                                const offcanvas = document.getElementById('offcanvasBottom');
-                                                                if (offcanvas) {
-                                                                    const btn = offcanvas.querySelector('[data-bs-dismiss="offcanvas"]');
-                                                                    if (btn) btn.click();
-                                                                }
-                                                                navigate(`/products/${cat.id}`);
+                                                            let current = filters.categoryBy || [];
+                                                            if (current.length === 0 && currentCategory) {
+                                                                current = [currentCategory];
                                                             }
+                                                            
+                                                            const updated = current.includes(cat.id)
+                                                              ? current.filter(v => v !== cat.id)
+                                                              : [...current, cat.id];
+                                                            
+                                                            // Close offcanvas when navigating
+                                                            const offcanvas = document.getElementById('offcanvasBottom');
+                                                            if (offcanvas) {
+                                                                const btn = offcanvas.querySelector('[data-bs-dismiss="offcanvas"]');
+                                                                if (btn) btn.click();
+                                                            }
+                                                            
+                                                            const params = new URLSearchParams(location.search);
+                                                            if (updated.length > 0) {
+                                                                params.set('categoryBy', updated.join(','));
+                                                            } else {
+                                                                params.delete('categoryBy');
+                                                            }
+                                                            navigate(`/products?${params.toString()}`);
                                                         }}
                                                     />
                                                     <label className="form-check-label filter_sub_title" htmlFor={`md-cat-${cat.id}`}>

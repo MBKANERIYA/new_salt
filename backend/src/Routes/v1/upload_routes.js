@@ -146,13 +146,22 @@ router.get("/get_upload_byGender", async (req, res) => {
 router.get("/get_id/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Upload.findById(id); // Use the correct model (Upload)
+    let product = null;
+
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+      product = await Upload.findById(id); 
+    }
+
+    if (!product) {
+      const titleRegex = new RegExp("^" + id.replace(/-/g, ".*") + "$", "i");
+      product = await Upload.findOne({ title: titleRegex });
+    }
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    res.status(200).json(product); // Send the product as JSON
+    res.status(200).json(product);
   } catch (error) {
     console.error("Error fetching product by ID:", error);
     res.status(500).json({ message: "Error fetching product" });
@@ -165,7 +174,16 @@ router.post("/filterProduct", uploadController.filterProducts)
 router.get("/get_similar/:id", async (req, res) => {
   try {
     const { id } = req.params; // Current product ID
-    const currentProduct = await Upload.findById(id); // Fetch the current product
+    let currentProduct = null;
+
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+      currentProduct = await Upload.findById(id);
+    }
+
+    if (!currentProduct) {
+      const titleRegex = new RegExp("^" + id.replace(/-/g, ".*") + "$", "i");
+      currentProduct = await Upload.findOne({ title: titleRegex });
+    }
 
     if (!currentProduct) {
       return res.status(404).json({ message: "Product not found" });
@@ -174,7 +192,7 @@ router.get("/get_similar/:id", async (req, res) => {
     // Fetch products of the same category excluding the current product
     const similarProducts = await Upload.find({
       category: currentProduct.category,
-      _id: { $ne: id }, // Exclude current product
+      _id: { $ne: currentProduct._id }, // Exclude current product
     });
 
     res.status(200).json(similarProducts);

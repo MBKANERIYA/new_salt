@@ -559,7 +559,7 @@ const Cart = () => {
                           key={item.productId.product_id} // Use product_id as key
                         >
                           <div className="col-lg-3 col-md-4 col-sm-4 col-4">
-                            <Link to={`/Productdetails/${item.productId.product_id}`}>
+                            <Link to={`/Productdetails/${item.productId.title ? item.productId.title.replace(/[\s/]+/g, '-').toLowerCase() : item.productId.product_id}`}>
                               <img
                                 alt={item.productId.title}
                                 src={item.productId.image01}

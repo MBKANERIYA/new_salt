@@ -7,6 +7,20 @@ import { cartAction } from '../../Store/Slice/CartSlice';
 import axios from 'axios';
 import API_BASE_URL from '../../Utils/apiConfig.js';
 
+const loadRazorpay = () => {
+    return new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = () => {
+            resolve(true);
+        };
+        script.onerror = () => {
+            resolve(false);
+        };
+        document.body.appendChild(script);
+    });
+};
+
 const Payment = () => {
     const [selectedOption, setSelectedOption] = useState('');
     const dispatch = useDispatch();
@@ -24,23 +38,26 @@ const Payment = () => {
             return;
         }
 
+        const user = JSON.parse(localStorage.getItem('user'));
+        const userId = user?._id || localStorage.getItem('guestUserId');
+        const orderData = JSON.parse(localStorage.getItem('orderData') || '{}');
+        const shippingData = orderData.shippingAddress || {};
+        const buyNowData = localStorage.getItem('buyNowProduct');
+        const buyNowItem = buyNowData ? JSON.parse(buyNowData) : null;
+
+        if (!userId) {
+            toast.error('User not found. Please login again.');
+            return;
+        }
+
         if (selectedOption === 'COD-card') {
             try {
-                const user = JSON.parse(localStorage.getItem('user'));
-                const userId = user?._id || localStorage.getItem('guestUserId');
-                const orderData = JSON.parse(localStorage.getItem('orderData') || '{}');
-                const shippingData = orderData.shippingAddress || {};
-
-                if (!userId) {
-                    toast.error('User not found. Please login again.');
-                    return;
-                }
-
                 const response = await axios.post(`${API_BASE_URL}/v1/order/createOrder/${userId}`, {
                     paymentMethod: 'COD',
                     shippingAddress: shippingData,
                     billingAddress: shippingData,
                     discount: discount || 0,
+                    buyNowItem
                 });
 
                 if (response.data.status) {
@@ -49,6 +66,7 @@ const Payment = () => {
                     // Clear localStorage order data
                     localStorage.removeItem('orderData');
                     localStorage.removeItem('shippingAddress');
+                    if (buyNowItem) localStorage.removeItem('buyNowProduct');
 
                     toast.success(`Order placed! Order ID: ${response.data.order.orderId}`);
                     navigate('/U-order');
@@ -58,7 +76,92 @@ const Payment = () => {
                 toast.error(error.response?.data?.message || 'Failed to place order. Please try again.');
             }
         } else {
-            toast.info('Payment gateway integration coming soon. Please use COD for now.');
+            // Online Payment (Razorpay)
+            try {
+                let paymentMethodLabel = 'Online';
+                if (selectedOption === 'credit-card') paymentMethodLabel = 'Credit Card';
+                else if (selectedOption === 'debit-card') paymentMethodLabel = 'Debit Card';
+                else if (selectedOption === 'upi-card') paymentMethodLabel = 'UPI';
+                else if (selectedOption === 'banking-card') paymentMethodLabel = 'Net Banking';
+
+                const res = await loadRazorpay();
+                if (!res) {
+                    toast.error('Razorpay SDK failed to load. Are you online?');
+                    return;
+                }
+
+                const createOrderRes = await axios.post(`${API_BASE_URL}/v1/order/create-razorpay-order`, {
+                    userId,
+                    discount: discount || 0,
+                    buyNowItem
+                });
+
+                if (!createOrderRes.data.status) {
+                    toast.error('Failed to initialize payment.');
+                    return;
+                }
+
+                const { amount, id: order_id, currency } = createOrderRes.data.order;
+
+                const options = {
+                    key: 'rzp_test_Sp8ow2u4uVKQIl',
+                    amount: amount.toString(),
+                    currency: currency,
+                    name: 'Salt & Glitz',
+                    description: 'Transaction for your order',
+                    image: '/assets/img/logo_website.png',
+                    order_id: order_id,
+                    handler: async function (response) {
+                        try {
+                            const verifyRes = await axios.post(`${API_BASE_URL}/v1/order/verify-razorpay-payment`, {
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_signature: response.razorpay_signature,
+                            });
+
+                            if (verifyRes.data.status) {
+                                const placeOrderRes = await axios.post(`${API_BASE_URL}/v1/order/createOrder/${userId}`, {
+                                    paymentMethod: paymentMethodLabel,
+                                    shippingAddress: shippingData,
+                                    billingAddress: shippingData, // Ensure billing is correctly passed if available
+                                    discount: discount || 0,
+                                    buyNowItem
+                                });
+
+                                if (placeOrderRes.data.status) {
+                                    dispatch(cartAction.clearCart());
+                                    localStorage.removeItem('orderData');
+                                    localStorage.removeItem('shippingAddress');
+                                    if (buyNowItem) localStorage.removeItem('buyNowProduct');
+                                    toast.success(`Order placed successfully! Order ID: ${placeOrderRes.data.order.orderId}`);
+                                    navigate('/U-order');
+                                }
+                            }
+                        } catch (error) {
+                            console.error('Payment verification failed:', error);
+                            toast.error('Payment verification failed. Please contact support if amount was deducted.');
+                        }
+                    },
+                    prefill: {
+                        name: user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'Guest User',
+                        email: user?.email || '',
+                        contact: user?.mobileNumber || '',
+                    },
+                    theme: {
+                        color: '#004d40',
+                    },
+                };
+
+                const paymentObject = new window.Razorpay(options);
+                paymentObject.on('payment.failed', function (response) {
+                    toast.error(`Payment Failed: ${response.error.description}`);
+                });
+                paymentObject.open();
+
+            } catch (error) {
+                console.error('Error initiating online payment:', error);
+                toast.error(error.response?.data?.message || 'Failed to initiate payment. Please try again.');
+            }
         }
     };
 

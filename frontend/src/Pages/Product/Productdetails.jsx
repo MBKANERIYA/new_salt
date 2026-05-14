@@ -3116,7 +3116,7 @@ const Productdetails = () => {
                                 <Slider ref={similar} {...similarSlider}>
                                     {similarProducts.slice(0, 10).map((item) => (
                                         <div className="col-lg-3 col-md-4 col-sm-6 mb-4 card border-0 px-1" key={item._id}>
-                                            <Link to={`/Productdetails/${item._id}`}>
+                                            <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item._id}`}>
                                                 <img
                                                     alt={item.title}
                                                     src={item.image01}
@@ -3171,7 +3171,7 @@ const Productdetails = () => {
                                 <Slider ref={recently} {...recentlySlider}>
                                     {recentlyViewed.map((item) => (
                                         <div className="card border-0 w-100 mx-auto d-block px-1" key={item.id}>
-                                            <Link to={`/Productdetails/${item.id}`}>
+                                            <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : item.id}`}>
                                                 <img
                                                     alt={item.title}
                                                     src={item.images?.[0]}

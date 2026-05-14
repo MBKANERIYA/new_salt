@@ -89,11 +89,11 @@ const Filter = ({ onFilterApply, initialFilters }) => {
   };
 
   const currentCategory = detectCategory();
-  const currentStyles = currentCategory ? styleMap[currentCategory] || [] : [];
-
+  
   // Filter state — only contains filter-specific fields
   // Does NOT include title/subCategory (those come from URL route)
   const [filters, setFilters] = useState({
+    categoryBy: initialFilters?.categoryBy || [],
     occasionBy: initialFilters?.occasionBy || [],
     priceLimit: initialFilters?.priceLimit || [],
     typeBy: initialFilters?.typeBy || [],
@@ -101,9 +101,17 @@ const Filter = ({ onFilterApply, initialFilters }) => {
     priceOrder: initialFilters?.priceOrder || "",
   });
 
+  // Determine active categories and styles
+  const activeCategories = filters.categoryBy?.length > 0 ? filters.categoryBy : (currentCategory ? [currentCategory] : []);
+  const allActiveStyles = activeCategories.reduce((acc, cat) => {
+    const styles = styleMap[cat] || [];
+    return acc.concat(styles.map(style => ({ ...style, category: cat })));
+  }, []);
+
   // Sync local state when parent's initialFilters change (e.g., URL navigation)
   useEffect(() => {
     setFilters({
+      categoryBy: initialFilters?.categoryBy || [],
       occasionBy: initialFilters?.occasionBy || [],
       priceLimit: initialFilters?.priceLimit || [],
       typeBy: initialFilters?.typeBy || [],
@@ -111,6 +119,7 @@ const Filter = ({ onFilterApply, initialFilters }) => {
       priceOrder: initialFilters?.priceOrder || "",
     });
   }, [
+    JSON.stringify(initialFilters?.categoryBy),
     JSON.stringify(initialFilters?.occasionBy),
     JSON.stringify(initialFilters?.priceLimit),
     JSON.stringify(initialFilters?.typeBy),
@@ -136,6 +145,7 @@ const Filter = ({ onFilterApply, initialFilters }) => {
 
   const clearFilters = () => {
     const empty = {
+      categoryBy: [],
       occasionBy: [],
       priceLimit: [],
       typeBy: [],
@@ -165,11 +175,26 @@ const Filter = ({ onFilterApply, initialFilters }) => {
                 className="form-check-input"
                 type="checkbox"
                 id={`cat-${cat.id}`}
-                checked={currentCategory === cat.id}
+                checked={filters.categoryBy?.length > 0 ? filters.categoryBy.includes(cat.id) : currentCategory === cat.id}
                 onChange={() => {
-                  if (currentCategory !== cat.id) {
-                    navigate(`/products/${cat.id}`);
+                  let current = filters.categoryBy || [];
+                  if (current.length === 0 && currentCategory) {
+                      current = [currentCategory];
                   }
+                  
+                  const updated = current.includes(cat.id)
+                    ? current.filter(v => v !== cat.id)
+                    : [...current, cat.id];
+                  
+                  // To avoid URL param conflicts when toggling categories,
+                  // we navigate to the base /products route and apply categoryBy
+                  const params = new URLSearchParams(location.search);
+                  if (updated.length > 0) {
+                      params.set('categoryBy', updated.join(','));
+                  } else {
+                      params.delete('categoryBy');
+                  }
+                  navigate(`/products?${params.toString()}`);
                 }}
               />
               <label className="form-check-label filter_sub_title" htmlFor={`cat-${cat.id}`}>
@@ -181,27 +206,45 @@ const Filter = ({ onFilterApply, initialFilters }) => {
       </div>
 
       {/* Shop by Style — shown when on a category page */}
-      {currentStyles.length > 0 && (
+      {allActiveStyles.length > 0 && (
         <div className="border border-bottom-3 border-top-0 border-start-0 border-end-0 pb-2">
           <h2 className="mt-3 filter_title">Shop by Style</h2>
           <div style={{ maxHeight: '280px', overflowY: 'auto' }}>
-            {currentStyles.slice(0, showMoreStyles ? currentStyles.length : 6).map((style, index) => (
-              <div className="form-check my-2" key={`style-${index}`}>
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id={`style-${index}`}
-                  checked={filters.occasionBy?.includes(style.tag) || false}
-                  onChange={() => handleArrayToggle("occasionBy", style.tag)}
-                />
-                <label className="form-check-label filter_sub_title" htmlFor={`style-${index}`}>
-                  {style.label}
-                </label>
-              </div>
-            ))}
+            {(() => {
+              const visibleStyles = showMoreStyles ? allActiveStyles : allActiveStyles.slice(0, 6);
+              const groupedStyles = visibleStyles.reduce((acc, style) => {
+                if (!acc[style.category]) acc[style.category] = [];
+                acc[style.category].push(style);
+                return acc;
+              }, {});
+
+              return Object.keys(groupedStyles).map(catId => (
+                <div key={catId} className={activeCategories.length > 1 ? "mb-3 mt-1" : ""}>
+                  {activeCategories.length > 1 && (
+                    <h6 className="fw-bold mb-2 filter_sub_title text-muted" style={{ fontSize: '13px' }}>
+                      {allCategories.find(c => c.id === catId)?.label || catId}
+                    </h6>
+                  )}
+                  {groupedStyles[catId].map((style, index) => (
+                    <div className={`form-check my-2 ${activeCategories.length > 1 ? 'ms-3' : ''}`} key={`style-${catId}-${index}`}>
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id={`style-${catId}-${index}`}
+                        checked={filters.occasionBy?.includes(style.tag) || false}
+                        onChange={() => handleArrayToggle("occasionBy", style.tag)}
+                      />
+                      <label className="form-check-label filter_sub_title" htmlFor={`style-${catId}-${index}`}>
+                        {style.label}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              ));
+            })()}
           </div>
-          {currentStyles.length > 6 && (
-            <button className="btn p-0 show_more_btn" onClick={() => setShowMoreStyles(!showMoreStyles)}>
+          {allActiveStyles.length > 6 && (
+            <button className="btn p-0 show_more_btn mt-2" onClick={() => setShowMoreStyles(!showMoreStyles)}>
               {showMoreStyles ? <MdKeyboardArrowUp className="fs-5 me-2" /> : <MdKeyboardArrowDown className="fs-5 me-2" />}
               {showMoreStyles ? "Show Less" : "More"}
             </button>

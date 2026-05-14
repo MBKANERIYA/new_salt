@@ -21,6 +21,7 @@ import Uorder from '../UserProfile/Uorder';
 import EditProfile from '../UserProfile/EditProfile';
 import Ucoupon from '../UserProfile/Ucoupon';
 import AboutUs from '../Pages/AboutUs';
+import Privillage from '../Pages/Privillage';
 import LoginSuccess from '../Pages/Verify/LoginSuccess';
 import Return from '../Policies/Return';
 import Exchange from '../Policies/Exchange';
@@ -62,6 +63,7 @@ const Router = () => {
         {/* Pages */}
         <Route path='/' element={<Mainpage />} />
         <Route path='/aboutUs' element={<AboutUs />} />
+        <Route path='/privilege' element={<Privillage />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/otp' element={<OtpComponent />} />
 

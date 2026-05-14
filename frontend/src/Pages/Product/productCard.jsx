@@ -172,7 +172,7 @@ const ProductCard = ({ Productsitem }) => {
     return (
         <div className="card-container position-relative">
             <div>
-                <Link to={`/Productdetails/${product_id}`}>
+                <Link to={`/Productdetails/${title ? title.replace(/[\s/]+/g, '-').toLowerCase() : product_id}`}>
                     {/* Slider for product images */}
                     {displayImages?.length > 0 ? (
                         displayImages.length === 1 ? (
@@ -456,7 +456,7 @@ export default ProductCard;
 //                 <Shimmer /> // Show shimmer effect when loading is true
 //             ) : (
 //                 <div>
-//                     <Link to={`/Productdetails/${product_id}`}>
+//                     <Link to={`/Productdetails/${title ? title.replace(/[\s/]+/g, '-').toLowerCase() : product_id}`}>
 //                         {displayImages?.length > 0 ? (
 //                             displayImages.length === 1 ? (
 //                                 <img

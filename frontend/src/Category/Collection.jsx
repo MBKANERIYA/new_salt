@@ -88,6 +88,7 @@ const CollectionPage = () => {
 
     // Current filter state
     const [appliedFilters, setAppliedFilters] = useState(() => ({
+        categoryBy: parseArrayParam('categoryBy'),
         occasionBy: getOccasionFromPath(),
         priceLimit: parseArrayParam('priceLimit'),
         typeBy: parseArrayParam('typeBy'),
@@ -102,7 +103,7 @@ const CollectionPage = () => {
         const pathOccasion = getOccasionFromPath();
 
         // Array params
-        ['occasionBy', 'priceLimit', 'typeBy'].forEach(key => {
+        ['categoryBy', 'occasionBy', 'priceLimit', 'typeBy'].forEach(key => {
             const val = filters[key];
             if (val && Array.isArray(val) && val.length > 0) {
                 // Skip occasionBy if it matches what the path already provides
@@ -143,7 +144,7 @@ const CollectionPage = () => {
         try {
             let filteredProducts = [];
 
-            if (!cat && !subCat && (!filters.occasionBy || filters.occasionBy.length === 0) &&
+            if (!cat && !subCat && (!filters.categoryBy || filters.categoryBy.length === 0) && (!filters.occasionBy || filters.occasionBy.length === 0) &&
                 (!filters.priceLimit || filters.priceLimit.length === 0) &&
                 (!filters.typeBy || filters.typeBy.length === 0) &&
                 !filters.sortBy && !filters.priceOrder && !filters.featured) {
@@ -153,16 +154,17 @@ const CollectionPage = () => {
             } else {
                 // Build API request body matching backend expectations:
                 // title → category, occasionBy → subCategory, typeBy → gender
-                const postBody = {
-                    title: cat,
-                };
+                const postBody = {};
+                
+                if (filters.categoryBy && filters.categoryBy.length > 0) {
+                    postBody.title = filters.categoryBy;
+                } else if (cat) {
+                    postBody.title = cat;
+                }
 
                 // SubCategory filter (occasionBy → maps to subCategory in DB)
                 if (filters.occasionBy && filters.occasionBy.length > 0) {
                     postBody.occasionBy = filters.occasionBy;
-                } else if (subCat) {
-                    const tag = styleTagMap[subCat] || subCat.toUpperCase();
-                    postBody.occasionBy = [tag];
                 }
 
                 // Gender filter
@@ -227,6 +229,7 @@ const CollectionPage = () => {
             : getOccasionFromPath();
 
         const newFilters = {
+            categoryBy: parseArrayParam('categoryBy'),
             occasionBy,
             priceLimit: parseArrayParam('priceLimit'),
             typeBy: parseArrayParam('typeBy'),
@@ -252,10 +255,10 @@ const CollectionPage = () => {
                         <div className=" flex-column text-start min-vh-25 py-3">
                             <div>
                                 <h6 className="mb-1">
-                                    {category} Designs &nbsp;
+                                    {appliedFilters.categoryBy?.length > 0 ? appliedFilters.categoryBy.join(" & ") : (category || "All")} Designs &nbsp;
                                     <span>{products.length} Designs</span>
                                 </h6>
-                                <p>Home &gt; Jewellery &gt; {category}</p>
+                                <p>Home &gt; Jewellery &gt; {appliedFilters.categoryBy?.length > 0 ? appliedFilters.categoryBy.join(" & ") : (category || "All")}</p>
                             </div>
                         </div>
                     </div>
@@ -285,7 +288,7 @@ const CollectionPage = () => {
                                 ) : products.length > 0 ? (
                                     products.map((item) => (
                                         <div className="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 card_shadow p-0 px-1" key={item.product_id || item.id}>
-                                            <Link to={`/Productdetails/${item.product_id || item.id}`}>
+                                            <Link to={`/Productdetails/${item.title ? item.title.replace(/[\s/]+/g, '-').toLowerCase() : (item.product_id || item.id)}`}>
                                                 <ProductCard Productsitem={item} />
                                             </Link>
                                         </div>

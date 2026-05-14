@@ -1,0 +1,249 @@
+/* Privillage.css */
+
+.get_header, .member_header, .membership_header, .faqs_header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.started_box {
+  background-color: var(--light-color, #f4f9f8);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  height: 100%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(171, 215, 205, 0.4);
+}
+
+.started_box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+
+.number {
+  background-color: var(--color, #00362A);
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 54, 42, 0.2);
+}
+
+.box_title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color, #00362A);
+}
+
+.member_box {
+  text-align: center;
+  padding: 1.5rem 0;
+  transition: transform 0.3s ease;
+}
+
+.member_box:hover {
+  transform: scale(1.05);
+}
+
+.icon_box img {
+  width: 65px;
+  height: auto;
+  margin-bottom: 1.2rem;
+}
+
+.icon_text {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #4a4a4a;
+}
+
+.innerbox {
+  background: linear-gradient(135deg, var(--light-color, #f4f9f8), rgba(171, 215, 205, 0.3));
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  text-align: center;
+  height: 100%;
+  border: 1px solid rgba(171, 215, 205, 0.6);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  transition: transform 0.3s ease;
+}
+
+.innerbox:hover {
+  transform: translateY(-5px);
+}
+
+.innerbox_titel {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color, #00362A);
+  margin-bottom: 0.8rem;
+  letter-spacing: 1.5px;
+}
+
+.innerbox_text {
+  font-size: 1.05rem;
+  color: #555;
+}
+
+.benefits-table {
+  margin-top: 2.5rem;
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+.benefits-table th {
+  background-color: var(--color, #00362A);
+  color: white;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.benefits-table td {
+  padding: 1.2rem 1rem;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid #eaeaea;
+  color: #4a4a4a;
+}
+
+.benefits-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.benefits-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.benefits-table tbody tr:hover {
+  background-color: var(--light-color, #f4f9f8);
+}
+
+.membership_mobileversion {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .benefits_table {
+    display: none;
+  }
+  .membership_mobileversion {
+    display: block;
+    margin-top: 2rem;
+  }
+  .mobile_box {
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  }
+  .mobile_title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--color, #00362A);
+    border-bottom: 2px solid rgba(171, 215, 205, 0.4);
+    padding-bottom: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .mobile_box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .mobile_box li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #555;
+  }
+  .check_icon {
+    color: var(--color, #00362A);
+    margin-right: 12px;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+}
+
+.conditins ul {
+  padding-left: 1.5rem;
+  line-height: 1.9;
+  color: #555;
+  font-size: 1.05rem;
+}
+
+.conditins li {
+  margin-bottom: 1rem;
+}
+
+.faq_accordian {
+  font-weight: 500;
+  background-color: #fff;
+  color: #2c2c2c;
+  padding: 1.2rem 1.5rem;
+  font-size: 1.05rem;
+}
+
+.faq_accordian:not(.collapsed) {
+  background-color: var(--light-color, #f4f9f8);
+  color: var(--color, #00362A);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.05);
+}
+
+.faq_accordian:focus {
+  box-shadow: none;
+  border-color: rgba(0,0,0,0.05);
+}
+
+.faq_accordian_body {
+  color: #555;
+  line-height: 1.8;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-top: 1px solid #eaeaea;
+}
+
+.accordion-item {
+  border: 1px solid #eaeaea;
+  border-radius: 8px !important;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.banner_button {
+  background-color: var(--color, #00362A);
+  color: white;
+  padding: 15px 40px;
+  display: inline-block;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.banner_button:hover {
+  background-color: #00221a;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 54, 42, 0.3);
+}
+
+.btn_section {
+  text-align: center;
+  margin-top: 1rem;
+}

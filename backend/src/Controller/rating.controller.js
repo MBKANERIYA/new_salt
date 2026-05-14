@@ -12,14 +12,20 @@ const findProduct = async (productId) => {
   return await Uplod.findOne({ id: productId });
 };
 
-// Helper: get the MongoDB _id for a given productId param
 const resolveProductId = async (productId) => {
   if (isValidObjectId(productId)) {
     const product = await Uplod.findById(productId);
     if (product) return product._id;
   }
   // Fallback: search by custom 'id' field
-  const product = await Uplod.findOne({ id: productId });
+  let product = await Uplod.findOne({ id: productId });
+  
+  if (!product) {
+    // Fallback: search by title slug
+    const titleRegex = new RegExp("^" + productId.replace(/-/g, ".*") + "$", "i");
+    product = await Uplod.findOne({ title: titleRegex });
+  }
+
   return product ? product._id : null;
 };
 
