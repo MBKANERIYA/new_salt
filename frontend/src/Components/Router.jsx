@@ -29,6 +29,8 @@ import Warranty from '../Policies/Warranty';
 import Contact from '../Pages/Contact';
 import Productdetails from '../Pages/Product/Productdetails';
 import Plan from '../Purchase/Plan';
+import PlanSelection from '../Purchase/PlanSelection';
+import PlanEnrollment from '../Purchase/PlanEnrollment';
 import OtpComponent from '../otpComponent';
 import Shimmer from '../ShimmerEffect/shimmer';
 import Test from '../test/Test';
@@ -127,6 +129,8 @@ const Router = () => {
 
         {/* Purchaes */}
         <Route path='/plan-of-purchaes' element={<Plan />} />
+        <Route path='/plan-selection' element={<PlanSelection />} />
+        <Route path='/plan-enrollment' element={<PlanEnrollment />} />
 
         {/* Shimmer */}
         <Route path='/shimmer' element={<Shimmer />} />

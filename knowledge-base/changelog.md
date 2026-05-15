@@ -1,5 +1,36 @@
 # Changelog
 
+## 2026-05-14 — Created Plan Selection Page
+**What**: Created a new `PlanSelection.jsx` page and wired the "START PLAN" buttons on the `Plan.jsx` page to navigate to it.
+**Why**: The user requested that clicking "Start Plan" should lead to the "Choose Your Plan" selection flow, matching the layout of the reference Treasure Chest Gold Scheme page.
+**Files Changed**:
+- `frontend/src/Purchase/PlanSelection.jsx` (New File)
+- `frontend/src/Components/Router.jsx` (Added `/plan-selection` route)
+- `frontend/src/Purchase/Plan.jsx` (Converted buttons to `<Link to="/plan-selection">`)
+
+## 2026-05-14 — Added Interactive Monthly Instalment Calculator
+**What**: Replaced the static gold rate banner on the Plan page (`Plan.jsx`) with a sleek interactive calculator box that supports manual typing.
+**Why**: The user wanted to perfectly replicate a reference design which features an input container where users can increment or decrement their instalment amount using `+` and `-` buttons, as well as manually type their desired amount.
+**Files Changed**:
+- `frontend/src/Purchase/Plan.jsx`
+- Added the custom-styled `Your Monthly Instalment` container and wired the `+` and `-` buttons to modify `sliderValue` by steps of 1000.
+- Converted the instalment value display into an `<input type="number">` to allow direct manual typing, with boundary validation on blur.
+
+## 2026-05-14 — Added Plan of Purchase Link to Footer
+**What**: Added a "Plan of Purchase (PoP)" link to the footer under the "Our Company" section.
+**Why**: The user requested an easy way for customers to navigate to the newly designed Plan of Purchase page from anywhere on the site.
+**Files Changed**:
+- `frontend/src/Components/Footer.jsx`
+- Added `<Link to="/plan-of-purchaes">Plan of Purchase (PoP)</Link>` to both the desktop footer and the mobile accordion layout.
+
+## 2026-05-14 — Redesigned Plan Page Hero and Calculator
+**What**: Replaced the existing "Calculate your PoP!" and "How it works?" sections on the `Plan.jsx` page with a new layout replicating the "Treasure Chest Gold Scheme" design (including EDGE and ICON plan cards and a comparative calculator table).
+**Why**: The user requested that the top 2 sections of the plan page match the design of a reference link to improve the visual appeal and clearly distinguish between different plan tiers (EDGE vs. ICON).
+**Files Changed**:
+- `frontend/src/Purchase/Plan.jsx`
+- Replaced the hero section with a new gradient background, USP pills, and two plan cards.
+- Replaced the old calculator with an interactive comparison table that dynamically updates based on the slider value.
+
 ## 2026-05-14 — Added Filter Functionality to "Gifts" Dropdown
 **What**: Updated the links in the "Gifts" dropdown menu to correctly filter products by gender. 
 **Why**: Clicking options like "Wife", "Daughter", and "Mother" should show female products, while "Husband", "Son", and "Father" should show male products. Previously they pointed to static placeholder pages or nowhere.

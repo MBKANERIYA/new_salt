@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import { formatCurrency } from '../Utils/formateCurrency';
 
 const Plan = () => {
@@ -55,103 +56,184 @@ const Plan = () => {
     ]
     return (
         <>
-            <section className="bg_purchase"></section>
-            <section className='container py-5'>
-                <div className='row'>
-                    <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 align-items-center d-flex'>
-                        <div>
-                            <div className='purchase_calculate'>
-                                <h3>Calculate your PoP!</h3>
-                                <p>Enter the amount (Min ₹1,000) you’d like to keep aside with us for 9 months and see the benefit.</p>
-                            </div>
-                            <div className='purchase_container'>
-                                <div className='purchase_instalment'>
-                                    <p>Monthly Instalment</p>
-                                    <p>Multiples of ₹1,000 only</p>
-                                </div>
-                                <div className='purchase_amount'>
-                                    <p>Amount</p>
-                                    <p>{sliderValue}</p>
-                                </div>
-                            </div>
-                            <div className="minimal-range-slider">
-                                <input
-                                    type="range"
-                                    min="1000"
-                                    max="200000"
-                                    step="1000"
-                                    value={sliderValue}
-                                    onChange={(e) => setSliderValue(e.target.value)}
-                                />
-                            </div>
-                            <div className='purchase_final_instalment mt-4'>
-                                <h6>Redemption value after 9 months :</h6>
-                                <h5 className='my-0'>{formatCurrency(instalment)}</h5>
-                                <p>(Your 10th instalment is free!)</p>
-                                <button className='btn mx-auto d-block w-100'>ENROL NOW</button>
-                            </div>
+            {/* Section 1: Hero */}
+            <section className="position-relative pt-5 pb-5 px-3" style={{ background: "linear-gradient(to bottom right, #f3e8ff, #fffbeb)" }}>
+                <div className="container text-center">
+                    {/* Header/Logo Area */}
+                    <div className="d-flex justify-content-between align-items-center mb-5">
+                        <img src="https://cdn.caratlane.com/media/static/images/V4/2023/CL/12_DEC/HP%20banner/Down_1/Mangalsutras.jpg" alt="Salt & Glitz Logo" style={{ height: "48px", objectFit: "contain", borderRadius: "8px" }} />
+                        <div className="d-flex gap-3">
+                            <button className="btn" style={{ borderColor: "#4F3267", color: "#4F3267", fontWeight: "600", backgroundColor: "transparent" }}>CALL US</button>
+                            <Link to="/plan-selection" className="btn text-white" style={{ backgroundColor: "#4F3267", fontWeight: "600" }}>START PLAN</Link>
                         </div>
                     </div>
-                    <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12'>
-                        <img alt='' src='https://assets.cltstatic.com/images/responsive/pop/pop-calculation-chart.png?v2.0' className='img-fluid mx-auto d-block'></img>
-                        <div className="final_instalments">
-                            <div className="instalment">
-                                <div className="instalment_icon"></div>
-                                <p>Your Instalments</p>
-                            </div>
-                            <div className="instalment">
-                                <div className="benefit_icon"></div>
-                                <p>CaratLane Benefit</p>
+
+                    {/* Main Text */}
+                    <h1 className="display-5 fw-bold mb-4" style={{ color: "#4F3267" }}>
+                        Pay 9 Instalments <br /> Get the 10th Month Free!
+                    </h1>
+
+                    {/* USP Icons */}
+                    <div className="d-flex justify-content-center gap-3 mb-5 flex-wrap">
+                        <div className="bg-white px-3 py-2 rounded-pill d-flex align-items-center gap-2 shadow-sm" style={{ opacity: 0.9 }}>
+                            <span style={{ color: "#4F3267" }}>✔</span> Trust of TATA
+                        </div>
+                        <div className="bg-white px-3 py-2 rounded-pill d-flex align-items-center gap-2 shadow-sm" style={{ opacity: 0.9 }}>
+                            <span style={{ color: "#4F3267" }}>👥</span> Assured Bonus
+                        </div>
+                        <div className="bg-white px-3 py-2 rounded-pill d-flex align-items-center gap-2 shadow-sm" style={{ opacity: 0.9 }}>
+                            <span style={{ color: "#4F3267" }}>🏠</span> Redeem Online/Store
+                        </div>
+                    </div>
+
+                    {/* Plan Cards */}
+                    <div className="row justify-content-center mx-auto" style={{ maxWidth: "900px" }}>
+                        {/* EDGE Card */}
+                        <div className="col-md-6 mb-4">
+                            <div className="p-4 shadow-lg position-relative text-start h-100 d-flex flex-column" style={{ backgroundColor: "#F8F1D9", border: "1px solid #fde68a", borderRadius: "16px" }}>
+                                <span className="position-absolute top-0 end-0 text-white px-3 py-1 fw-bold" style={{ backgroundColor: "#4F3267", borderBottomLeftRadius: "8px", borderTopRightRadius: "16px", fontSize: "12px" }}>MOST POPULAR</span>
+                                <h3 className="fw-bold mb-3 d-flex align-items-center gap-2" style={{ color: "#84631B", fontSize: "1.5rem" }}>👑 EDGE</h3>
+                                <div>
+                                    <div className="text-white py-1 px-3 rounded d-inline-block mb-4 small" style={{ backgroundColor: "#D4AF37" }}>10th Month Free + Gold Value</div>
+                                </div>
+                                <ul className="small text-muted list-unstyled mb-4 flex-grow-1" style={{ lineHeight: "2" }}>
+                                    <li>✔ Pay 9 instalments & get the 10th free</li>
+                                    <li>✔ Instalment value converted as per gold rate</li>
+                                    <li>✔ Buy jewellery after 10th month</li>
+                                </ul>
+                                <Link to="/plan-selection" className="btn w-100 fw-bold shadow-sm mt-auto" style={{ backgroundColor: "white", color: "#4F3267", border: "1px solid #f3f4f6" }}>START PLAN &gt;</Link>
                             </div>
                         </div>
 
-                        <div className='purchase_final_instalment2'>
-                            <p className='m-0 p-0'>Your Instalments (9 Months)<span>₹9,000</span></p>
-                            <p className='m-0 p-0'>Saltand Glitz Benefit (10th Instalment)<span>{formatCurrency(sliderValue)}</span></p>
-                            <p className='m-0 p-0'>Total Redeemable Amount<span>{formatCurrency(instalment)}</span></p>
+                        {/* ICON Card */}
+                        <div className="col-md-6 mb-4">
+                            <div className="p-4 shadow-lg text-start h-100 d-flex flex-column" style={{ backgroundColor: "#F3E8FF", border: "1px solid #e9d5ff", borderRadius: "16px" }}>
+                                <h3 className="fw-bold mb-3 d-flex align-items-center gap-2" style={{ color: "#4F3267", fontSize: "1.5rem" }}>🏷 ICON</h3>
+                                <div>
+                                    <div className="text-white py-1 px-3 rounded d-inline-block mb-4 small" style={{ backgroundColor: "#8B5CF6" }}>10th Month Free</div>
+                                </div>
+                                <ul className="small text-muted list-unstyled mb-4 flex-grow-1" style={{ lineHeight: "2" }}>
+                                    <li>✔ Pay 9 instalments & get the 10th free</li>
+                                    <li>✔ Buy jewellery after 10th month</li>
+                                </ul>
+                                <Link to="/plan-selection" className="btn w-100 fw-bold shadow-sm mt-auto" style={{ backgroundColor: "white", color: "#4F3267", border: "1px solid #f3f4f6" }}>START PLAN &gt;</Link>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                {/* Wave Divider */}
+                <div className="position-absolute bottom-0 start-0 w-100 overflow-hidden" style={{ lineHeight: 0 }}>
+                    <svg viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "60px", fill: "white" }}>
+                        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C58.47,100.22,122.3,103.11,188,95.08,243,88.45,283.06,63.55,321.39,56.44Z"></path>
+                    </svg>
+                </div>
             </section>
-            <section className="container-fluid bg_works">
-                <h3 className="font_main text-center pb-4">How it works?</h3>
-                <div className="row justify-content-center text-center">
-                    <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 py-4">
-                        <div className="purchase_box d-flex flex-column align-items-center">
-                            <div className="icon_wrapper">
-                                <img
-                                    src="assets/img/pop-sprite.png"
-                                    alt="Save Monthly"
-                                    className="icon_image"
-                                />
+
+            {/* Section 2: Calculator */}
+            <section className="py-5 bg-white px-3">
+                <div className="container" style={{ maxWidth: "900px" }}>
+                    <h2 className="fw-bold text-center mb-4" style={{ color: "#4F3267", fontSize: "2rem" }}>Calculate & Compare Plans</h2>
+
+                    <div className="d-flex flex-column align-items-center mb-5">
+                        <div className="d-flex justify-content-between align-items-center px-4 py-2" style={{ border: "1px solid #e9d5ff", borderRadius: "12px", width: "100%", maxWidth: "400px", backgroundColor: "#fff" }}>
+                            <div className="text-start">
+                                <div className="text-muted" style={{ fontSize: "12px" }}>Your Monthly Instalment</div>
+                                <div className="d-flex align-items-center">
+                                    <span className="fw-bold fs-5" style={{ color: "#4F3267" }}>₹</span>
+                                    <input
+                                        type="number"
+                                        className="fw-bold fs-5 border-0 bg-transparent p-0 m-0"
+                                        style={{ color: "#4F3267", width: "120px", outline: "none", appearance: "textfield" }}
+                                        value={sliderValue}
+                                        onChange={(e) => {
+                                            const val = e.target.value;
+                                            if (val === '') {
+                                                setSliderValue('');
+                                            } else {
+                                                let num = Number(val);
+                                                if (num > 200000) num = 200000;
+                                                setSliderValue(num);
+                                            }
+                                        }}
+                                        onBlur={(e) => {
+                                            let val = Number(e.target.value);
+                                            if (val < 1000) val = 1000;
+                                            setSliderValue(val);
+                                        }}
+                                    />
+                                </div>
                             </div>
-                            <p>Save a fixed monthly amount with Saltand Glitz</p>
+                            <div className="d-flex gap-2">
+                                <button 
+                                    className="btn btn-sm rounded-circle d-flex align-items-center justify-content-center fs-5 pb-2" 
+                                    style={{ width: "32px", height: "32px", border: "1px solid #e9d5ff", color: "#8B5CF6", backgroundColor: "#faf5ff" }}
+                                    onClick={() => setSliderValue(prev => Math.max(Number(prev) - 1000, 1000))}
+                                >
+                                    -
+                                </button>
+                                <button 
+                                    className="btn btn-sm rounded-circle d-flex align-items-center justify-content-center fs-5 pb-2" 
+                                    style={{ width: "32px", height: "32px", border: "1px solid #e9d5ff", color: "#8B5CF6", backgroundColor: "#faf5ff" }}
+                                    onClick={() => setSliderValue(prev => Math.min(Number(prev) + 1000, 200000))}
+                                >
+                                    +
+                                </button>
+                            </div>
+                        </div>
+                        <div className="mt-3 text-muted fw-medium" style={{ fontSize: "14px" }}>
+                            <span style={{ color: "#ef4444" }}>●</span> Current 24KT Gold Rate: ₹15781
                         </div>
                     </div>
-                    <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 py-4">
-                        <div className="purchase_box d-flex flex-column align-items-center">
-                            <div className="icon_wrapper">
-                                <img
-                                    src="assets/img/pop-sprite.png"
-                                    alt="CaratLane Benefit"
-                                    className="icon_image"
-                                />
-                            </div>
-                            <p>As a Saltand Glitz Benefit, get the 10th instalment free!</p>
-                        </div>
+
+                    <div className="table-responsive rounded border shadow-sm">
+                        <table className="table mb-0 align-middle">
+                            <thead style={{ backgroundColor: "#f3f4f6" }}>
+                                <tr>
+                                    <th className="p-3 border-bottom-0" style={{ color: "#4F3267" }}>Benefits</th>
+                                    <th className="p-3 text-center border-bottom-0" style={{ color: "#4F3267" }}>EDGE</th>
+                                    <th className="p-3 text-center border-bottom-0" style={{ color: "#4F3267" }}>ICON</th>
+                                </tr>
+                            </thead>
+                            <tbody className="small">
+                                <tr>
+                                    <td className="p-3 fw-medium">You Pay 9 Instalments</td>
+                                    <td className="p-3 text-center fw-bold">₹{formatCurrency(sliderValue * 9).replace("₹", "")}</td>
+                                    <td className="p-3 text-center fw-bold">₹{formatCurrency(sliderValue * 9).replace("₹", "")}</td>
+                                </tr>
+                                <tr style={{ backgroundColor: "rgba(254, 243, 199, 0.3)" }}>
+                                    <td className="p-3 fw-medium">
+                                        Gold Value Returns*
+                                        <p className="text-muted mb-2" style={{ fontSize: "10px" }}>(Adjust slider for approx returns)</p>
+                                        <input
+                                            type="range"
+                                            className="form-range"
+                                            min="1000"
+                                            max="200000"
+                                            step="1000"
+                                            value={sliderValue}
+                                            onChange={(e) => setSliderValue(Number(e.target.value))}
+                                        />
+                                    </td>
+                                    <td className="p-3 text-center fw-bold text-success">₹{formatCurrency(sliderValue * 0.05).replace("₹", "")}*</td>
+                                    <td className="p-3 text-center text-muted">Not Available</td>
+                                </tr>
+                                <tr>
+                                    <td className="p-3 fw-medium">Salt & Glitz Discount (10th Month)</td>
+                                    <td className="p-3 text-center fw-bold">₹{formatCurrency(sliderValue).replace("₹", "")}</td>
+                                    <td className="p-3 text-center fw-bold">₹{formatCurrency(sliderValue).replace("₹", "")}</td>
+                                </tr>
+                                <tr className="text-white fw-bold" style={{ backgroundColor: "#4F3267" }}>
+                                    <td className="p-3">Buy Jewellery Worth</td>
+                                    <td className="p-3 text-center fs-5">₹{formatCurrency((sliderValue * 10) + (sliderValue * 0.05)).replace("₹", "")}*</td>
+                                    <td className="p-3 text-center fs-5">₹{formatCurrency(sliderValue * 10).replace("₹", "")}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 py-4">
-                        <div className="purchase_box d-flex flex-column align-items-center">
-                            <div className="icon_wrapper">
-                                <img
-                                    src="assets/img/pop-sprite.png"
-                                    alt="Shop Favorite Design"
-                                    className="icon_image"
-                                />
-                            </div>
-                            <p>After 10 months, shop your favourite design online or at the store!</p>
-                        </div>
-                    </div>
+                    <p className="mt-3 text-center fst-italic text-muted" style={{ fontSize: "10px" }}>
+                        *Disclaimer: Gold price fluctuations apply. In case of a drop in rates, differences are borne by the customer.
+                    </p>
                 </div>
             </section>
             <section className="container py-5 cta-section">

@@ -67,6 +67,7 @@ const Footer = () => {
             <p><Link to="/return">Return Policies</Link></p>
             <p><Link to="/exchange">Exchange & Buy Back Policies</Link></p>
             <p><Link to="/warranty">Warranty Policies</Link></p>
+            <p><Link to="/plan-of-purchaes">Plan of Purchase (PoP)</Link></p>
           </div>
 
           <div className='col-lg-3 col-md-6 col-sm-12 footer_sec pb-5'>
@@ -224,6 +225,7 @@ const faqData = [
         <p><Link to="/return">Return Policy</Link></p>
         <p><Link to="/exchange">Transparency in Coverage</Link></p>
         <p><Link to="/warranty">Warranty Policies</Link></p>
+        <p><Link to="/plan-of-purchaes">Plan of Purchase (PoP)</Link></p>
       </div>
     ),
   },
